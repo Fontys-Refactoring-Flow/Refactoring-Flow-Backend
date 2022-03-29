@@ -1,5 +1,6 @@
-package com.refactoryflow.refactoryflowbackend;
+package com.refactoryflow.refactoryflowbackend.Controller;
 
+import com.refactoryflow.refactoryflowbackend.Model.Challenge;
 import com.refactoryflow.refactoryflowbackend.Repository.ChallengeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

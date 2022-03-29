@@ -1,4 +1,4 @@
-package com.refactoryflow.refactoryflowbackend;
+package com.refactoryflow.refactoryflowbackend.Model;
 
 import javax.persistence.*;
 
@@ -12,6 +12,8 @@ public class Challenge {
 
     @Column(name = "name")
     private String Name;
+    @Column(name = "description")
+    private String Description;
     @Column(name = "subject")
     private String Subject;
     @Column(name = "difficulty")
@@ -29,6 +31,14 @@ public class Challenge {
 
     public void setName(String name) {
         Name = name;
+    }
+
+    public String getDescription() {
+        return Description;
+    }
+
+    public void setDescription(String description) {
+        Description = description;
     }
 
     public String getSubject() {
