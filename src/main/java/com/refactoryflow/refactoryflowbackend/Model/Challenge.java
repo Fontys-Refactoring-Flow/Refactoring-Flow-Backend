@@ -15,7 +15,7 @@ public class Challenge {
     @Column(name = "description")
     private String Description;
     @Column(name = "subject")
-    private String Subject;
+    private String subject;
     @Column(name = "difficulty")
     private String Difficulty;
     @Column(name = "duration")
@@ -42,11 +42,11 @@ public class Challenge {
     }
 
     public String getSubject() {
-        return Subject;
+        return subject;
     }
 
     public void setSubject(String subject) {
-        Subject = subject;
+        this.subject = subject;
     }
 
     public String getDifficulty() {
@@ -68,7 +68,7 @@ public class Challenge {
     public Challenge(long id, String name, String subject, String difficulty, int duration) {
         Id = id;
         Name = name;
-        Subject = subject;
+        this.subject = subject;
         Difficulty = difficulty;
         Duration = duration;
     }

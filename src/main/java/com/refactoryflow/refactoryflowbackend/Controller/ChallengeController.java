@@ -2,6 +2,7 @@ package com.refactoryflow.refactoryflowbackend.Controller;
 
 import com.refactoryflow.refactoryflowbackend.Model.Challenge;
 import com.refactoryflow.refactoryflowbackend.Repository.ChallengeRepository;
+import com.refactoryflow.refactoryflowbackend.Service.ChallengeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,17 +15,26 @@ import java.util.List;
 @RequestMapping("api/v1")
 public class ChallengeController {
 
+    ChallengeService challengeService;
+
     @Autowired
-    private ChallengeRepository challengeRepository;
+    public ChallengeController(ChallengeService challengeService) {
+        this.challengeService = challengeService;
+    }
 
     @GetMapping(value = "/challenge")
     public List<Challenge> getAllChallenges(){
-        return challengeRepository.findAll();
+        return challengeService.findAll();
     }
 
-    @GetMapping(value = "/challenge/{challengeid}")
+    @GetMapping(value = "/challenge/id/{challengeid}")
     public Challenge getChallengeById(@PathVariable long challengeid){
-        return challengeRepository.findById(challengeid)
+        return challengeService.findById(challengeid)
                 .orElseThrow(() -> new ResourceNotFoundException("Challenge not exist with id :" + challengeid));
+    }
+
+    @GetMapping(value = "/challenge/subject/{subject}")
+    public List<Challenge> getChallengeBySubject(@PathVariable String subject){
+        return challengeService.findChallengeBySubject(subject);
     }
 }
