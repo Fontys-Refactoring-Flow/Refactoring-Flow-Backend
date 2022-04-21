@@ -1,7 +1,19 @@
 package com.refactoryflow.refactoryflowbackend.Model;
 
-import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "challenge")
 public class Challenge {
@@ -20,59 +32,6 @@ public class Challenge {
     private String Difficulty;
     @Column(name = "duration")
     private int Duration;
-
-    public long getId() {
-        return Id;
-    }
-
-    public String getName() {
-        return Name;
-    }
-
-    public void setName(String name) {
-        Name = name;
-    }
-
-    public String getDescription() {
-        return Description;
-    }
-
-    public void setDescription(String description) {
-        Description = description;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public String getDifficulty() {
-        return Difficulty;
-    }
-
-    public void setDifficulty(String difficulty) {
-        Difficulty = difficulty;
-    }
-
-    public int getDuration() {
-        return Duration;
-    }
-
-    public void setDuration(int duration) {
-        Duration = duration;
-    }
-
-    public Challenge(long id, String name, String subject, String difficulty, int duration) {
-        Id = id;
-        Name = name;
-        this.subject = subject;
-        Difficulty = difficulty;
-        Duration = duration;
-    }
-
-    public Challenge() {
-    }
+    @ManyToMany(mappedBy = "challengesInProgress")
+    private List<Student> students;
 }
