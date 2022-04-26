@@ -1,5 +1,6 @@
 package com.refactoryflow.refactoryflowbackend.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "challenge")
+@JsonIgnoreProperties(value = "students")
 public class Challenge {
 
     @Id
@@ -23,15 +25,19 @@ public class Challenge {
     private long Id;
 
     @Column(name = "name")
-    private String Name;
+    private String name;
     @Column(name = "description")
-    private String Description;
+    private String description;
     @Column(name = "subject")
     private String subject;
     @Column(name = "difficulty")
-    private String Difficulty;
+    private String difficulty;
     @Column(name = "duration")
-    private int Duration;
+    private int duration;
     @ManyToMany(mappedBy = "challengesInProgress")
     private List<Student> students;
+
+    public Challenge(long id) {
+        Id = id;
+    }
 }

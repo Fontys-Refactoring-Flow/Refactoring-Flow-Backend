@@ -1,14 +1,17 @@
 package com.refactoryflow.refactoryflowbackend.Controller;
 
 import com.refactoryflow.refactoryflowbackend.Model.Challenge;
+import com.refactoryflow.refactoryflowbackend.Model.Student;
 import com.refactoryflow.refactoryflowbackend.Repository.ChallengeRepository;
 import com.refactoryflow.refactoryflowbackend.Service.ChallengeService;
+import com.refactoryflow.refactoryflowbackend.Service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.refactoryflow.refactoryflowbackend.Exception.ResourceNotFoundException;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -16,6 +19,9 @@ import java.util.List;
 public class ChallengeController {
 
     ChallengeService challengeService;
+
+    @Autowired
+    StudentService studentService;
 
     @Autowired
     public ChallengeController(ChallengeService challengeService) {
@@ -36,5 +42,11 @@ public class ChallengeController {
     @GetMapping(value = "/challenge/subject/{subject}")
     public List<Challenge> getChallengeBySubject(@PathVariable String subject){
         return challengeService.findChallengeBySubject(subject);
+    }
+
+    @GetMapping("/challenge/{studentid}")
+    List<Challenge> findChallengeByStudentId(@PathVariable Long studentid){
+        Optional<Student> student = studentService.findStudent(studentid);
+        return challengeService.findChallengeByStudents(student);
     }
 }

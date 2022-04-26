@@ -1,6 +1,7 @@
 package com.refactoryflow.refactoryflowbackend.Service;
 
 import com.refactoryflow.refactoryflowbackend.Model.Challenge;
+import com.refactoryflow.refactoryflowbackend.Model.Student;
 import com.refactoryflow.refactoryflowbackend.Repository.ChallengeRepository;
 import com.refactoryflow.refactoryflowbackend.Repository.ChallengeRepositoryCustom;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,4 +32,11 @@ public class ChallengeService implements ChallengeRepositoryCustom {
     public List<Challenge> findChallengeBySubject(String subject) {
         return challengeRepository.findChallengeBySubject(subject);
     }
+
+    @Override
+    public List<Challenge> findChallengeByStudents(Optional<Student> student) {
+        return challengeRepository.findChallengeByStudents(student);
+    }
+
+
 }

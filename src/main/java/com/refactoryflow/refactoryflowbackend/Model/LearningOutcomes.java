@@ -17,7 +17,7 @@ public class LearningOutcomes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long Id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
     @JoinColumn(name = "student_id")
     private Student studentProgress;
     @Column(name = "code_quality")
