@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ChallengeRepositoryCustom {
-    List<Challenge> findChallengeBySubject(String subject);
+    List<Challenge> findChallengeByLanguage(String language);
 
     List<Challenge> findChallengeByStudents(Optional<Student> student);
 }

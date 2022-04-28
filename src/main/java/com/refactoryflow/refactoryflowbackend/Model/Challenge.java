@@ -28,8 +28,8 @@ public class Challenge {
     private String name;
     @Column(name = "description")
     private String description;
-    @Column(name = "subject")
-    private String subject;
+    @Column(name = "language")
+    private String language;
     @Column(name = "difficulty")
     private String difficulty;
     @Column(name = "duration")

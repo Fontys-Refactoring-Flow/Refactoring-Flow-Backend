@@ -4,6 +4,7 @@ import lombok.*;
 import org.springframework.context.annotation.Scope;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,9 +18,8 @@ public class LearningOutcomes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long Id;
 
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "student_id")
-    private Student studentProgress;
+    @ManyToMany(mappedBy = "learningOutcomes")
+    private List<Student> students;
     @Column(name = "code_quality")
     private long codeQuality;
     @Column(name = "refactoring")

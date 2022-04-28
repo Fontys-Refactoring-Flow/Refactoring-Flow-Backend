@@ -31,8 +31,6 @@ public class Student {
     private String password;
     @Column(name = "semester")
     private Long semester;
-    @OneToMany(mappedBy = "studentProgress")
-    private List<LearningOutcomes> outcomes;
     @ManyToMany(cascade =  {CascadeType.ALL})
     @JoinTable(
             name = "student_challenge",
@@ -40,13 +38,11 @@ public class Student {
             inverseJoinColumns = {@JoinColumn(name = "challenge_id")}
     )
     private List<Challenge> challengesInProgress;
-
-    public Student(Long id, String name, String email, String password, Long semester, List<Challenge> challengesInProgress) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.semester = semester;
-        this.challengesInProgress = challengesInProgress;
-    }
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "student_lo",
+            joinColumns = {@JoinColumn(name = "student_id")},
+            inverseJoinColumns = {@JoinColumn(name = "lo_id")}
+    )
+    private List<LearningOutcomes> learningOutcomes;
 }

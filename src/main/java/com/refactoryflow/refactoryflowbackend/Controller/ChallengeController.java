@@ -39,9 +39,9 @@ public class ChallengeController {
                 .orElseThrow(() -> new ResourceNotFoundException("Challenge not exist with id :" + challengeid));
     }
 
-    @GetMapping(value = "/challenge/subject/{subject}")
-    public List<Challenge> getChallengeBySubject(@PathVariable String subject){
-        return challengeService.findChallengeBySubject(subject);
+    @GetMapping(value = "/challenge/language/{language}")
+    public List<Challenge> getChallengeByLanguage(@PathVariable String language){
+        return challengeService.findChallengeByLanguage(language);
     }
 
     @GetMapping("/challenge/{studentid}")

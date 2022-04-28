@@ -29,8 +29,8 @@ public class ChallengeService implements ChallengeRepositoryCustom {
     }
 
     @Override
-    public List<Challenge> findChallengeBySubject(String subject) {
-        return challengeRepository.findChallengeBySubject(subject);
+    public List<Challenge> findChallengeByLanguage(String language) {
+        return challengeRepository.findChallengeByLanguage(language);
     }
 
     @Override
