@@ -24,6 +24,9 @@ public class ChallengeController {
     StudentService studentService;
 
     @Autowired
+    private ChallengeRepository challengeRepository;
+
+    @Autowired
     public ChallengeController(ChallengeService challengeService) {
         this.challengeService = challengeService;
     }
@@ -48,5 +51,9 @@ public class ChallengeController {
     List<Challenge> findChallengeByStudentId(@PathVariable Long studentid){
         Optional<Student> student = studentService.findStudent(studentid);
         return challengeService.findChallengeByStudents(student);
+    }
+    @PostMapping("/challenge")
+    public Challenge createChallenge(@RequestBody Challenge challenge){
+        return challengeRepository.save(challenge);
     }
 }
