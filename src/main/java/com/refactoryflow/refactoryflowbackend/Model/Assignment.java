@@ -7,18 +7,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "challenge")
+@Table(name = "assignment")
 @JsonIgnoreProperties(value = "students")
-public class Challenge {
+public class Assignment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,10 +32,10 @@ public class Challenge {
     private String difficulty;
     @Column(name = "duration")
     private int duration;
-    @ManyToMany(mappedBy = "challengesInProgress")
+    @ManyToMany(mappedBy = "assignmentsInProgress")
     private List<Student> students;
 
-    public Challenge(long id) {
+    public Assignment(long id) {
         Id = id;
     }
 }

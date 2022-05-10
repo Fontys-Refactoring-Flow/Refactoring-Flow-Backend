@@ -30,4 +30,9 @@ public class StudentService implements StudentRepositoryCustom {
     public Optional<Student> findById(Long id){
         return studentRepository.findById(id);
     }
+
+    @Override
+    public Student findStudentByEmailAndPassword(String email, String password) {
+        return studentRepository.findStudentByEmailAndPassword(email, password);
+    }
 }

@@ -34,4 +34,9 @@ public class StudentController {
     public Student updateStudent(@RequestBody Student student){
         return studentService.updateStudent(student);
     }
+
+    @GetMapping("/student/login/{email}/{password}")
+    public Student login(@PathVariable String email, @PathVariable String password){
+        return studentService.findStudentByEmailAndPassword(email, password);
+    }
 }
