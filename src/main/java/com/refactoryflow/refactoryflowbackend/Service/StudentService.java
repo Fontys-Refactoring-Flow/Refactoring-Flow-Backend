@@ -27,7 +27,7 @@ public class StudentService implements StudentRepositoryCustom {
         return studentRepository.save(student);
     }
 
-    public Optional<Student> findStudent(Long id){
+    public Optional<Student> findById(Long id){
         return studentRepository.findById(id);
     }
 }

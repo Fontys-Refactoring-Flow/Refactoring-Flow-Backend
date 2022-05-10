@@ -46,7 +46,8 @@ public class ChallengeController {
 
     @GetMapping("/challenge/{studentid}")
     List<Challenge> findChallengeByStudentId(@PathVariable Long studentid){
-        Optional<Student> student = studentService.findStudent(studentid);
+        Student student = new Student();
+        student.setId(studentid);
         return challengeService.findChallengeByStudents(student);
     }
 }

@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "student")
-@JsonIgnoreProperties(value = "challengesInProgress")
+@JsonIgnoreProperties(value = {"challengesInProgress", "learningOutcomes"})
 public class Student {
 
     @Id
@@ -31,18 +31,13 @@ public class Student {
     private String password;
     @Column(name = "semester")
     private Long semester;
-    @ManyToMany(cascade =  {CascadeType.ALL})
+    @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
             name = "student_challenge",
             joinColumns = {@JoinColumn(name = "student_id")},
             inverseJoinColumns = {@JoinColumn(name = "challenge_id")}
     )
     private List<Challenge> challengesInProgress;
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(
-            name = "student_lo",
-            joinColumns = {@JoinColumn(name = "student_id")},
-            inverseJoinColumns = {@JoinColumn(name = "lo_id")}
-    )
-    private List<LearningOutcomes> learningOutcomes;
+    @OneToOne(mappedBy = "student")
+    private LearningOutcomes learningOutcomes;
 }

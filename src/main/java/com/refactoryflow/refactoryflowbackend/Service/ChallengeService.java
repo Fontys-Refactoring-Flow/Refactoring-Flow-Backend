@@ -34,7 +34,7 @@ public class ChallengeService implements ChallengeRepositoryCustom {
     }
 
     @Override
-    public List<Challenge> findChallengeByStudents(Optional<Student> student) {
+    public List<Challenge> findChallengeByStudents(Student student) {
         return challengeRepository.findChallengeByStudents(student);
     }
 
