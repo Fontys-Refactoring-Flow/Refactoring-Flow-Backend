@@ -19,11 +19,13 @@ public class Segment {
     private long Id;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "Course_Id")
-    private Course Course_Id;
+    @JoinColumn(name = "CourseId")
+    private Course courseId;
 
     @Column(name = "Title")
     private String title;
     @Column(name = "Text")
-    private String Text;
+    private String text;
+    @Column(name = "Nr")
+    private Long nr;
 }

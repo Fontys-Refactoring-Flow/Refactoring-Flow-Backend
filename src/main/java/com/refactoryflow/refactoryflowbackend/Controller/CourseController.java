@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping("api/v1")
-public class CourseController {
+public class    CourseController {
 
     ChallengeService challengeService;
 
@@ -22,19 +22,19 @@ public class CourseController {
         this.challengeService = challengeService;
     }
 
-    @GetMapping(value = "/Course")
-    public List<Challenge> getAllChallenges(){
-        return challengeService.findAll();
-    }
+//    @GetMapping(value = "/Course")
+//    public List<Challenge> getAllChallenges(){
+//        return challengeService.findAll();
+//    }
 
     @GetMapping(value = "/Course/id/{Courseid}")
     public Challenge GetCourseById(@PathVariable long Courseid){
         return challengeService.findById(Courseid)
-                .orElseThrow(() -> new ResourceNotFoundException("Challenge not exist with id :" + Courseid));
+                .orElseThrow(() -> new ResourceNotFoundException("Course does not exist with id :" + Courseid));
     }
 
     @GetMapping(value = "/course/Title/{title}")
     public List<Challenge> getChallengeBySubject(@PathVariable String subject){
-        return challengeService.findChallengeBySubject(subject);
+        return challengeService.findChallengeBySubject(subject); //needs to be changed. currently not used, so no problems occur yet
     }
 }

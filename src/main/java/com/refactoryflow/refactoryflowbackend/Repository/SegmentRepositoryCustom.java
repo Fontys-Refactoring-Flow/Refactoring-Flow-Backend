@@ -1,11 +1,12 @@
 package com.refactoryflow.refactoryflowbackend.Repository;
 
 import com.refactoryflow.refactoryflowbackend.Model.Segment;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
-@Repository
+
 public interface SegmentRepositoryCustom {
-    List<Segment> FindSegmentByCourseID(Integer CourseID);
+    Optional<Segment> findSegmentByCourseId(Long CourseId);
+    Segment findByNrAndCourseId(Long Nr, Long CourseId);
 }
