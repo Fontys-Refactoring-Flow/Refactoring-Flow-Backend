@@ -1,9 +1,11 @@
 package com.refactoryflow.refactoryflowbackend.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.springframework.context.annotation.Scope;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,10 +18,9 @@ public class LearningOutcomes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long Id;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "student_id")
-    private Student studentProgress;
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "student_id", referencedColumnName = "id")
+    private Student student;
     @Column(name = "code_quality")
     private long codeQuality;
     @Column(name = "refactoring")
