@@ -21,7 +21,7 @@ public class CodefileController {
     }
 
     @PostMapping("/CodeFile")
-    public CodeFile createCodefile(@RequestBody CodeFile codefile){
+    public CodeFile createCodeFile(@RequestBody CodeFile codefile){
         return codeFileRepository.save(codefile);
     }
 }
