@@ -1,5 +1,6 @@
 package com.refactoryflow.refactoryflowbackend.Service;
 
+import com.refactoryflow.refactoryflowbackend.Model.Course;
 import com.refactoryflow.refactoryflowbackend.Model.Segment;
 import com.refactoryflow.refactoryflowbackend.Repository.SegmentRepository;
 import com.refactoryflow.refactoryflowbackend.Repository.SegmentRepositoryCustom;
@@ -29,19 +30,18 @@ public class SegmentService implements SegmentRepositoryCustom {
     }
 
     @Override
-    public Optional<Segment> findSegmentByCourseId(Long CourseId) {
-        return segmentRepository.findSegmentByCourseId(CourseId);
+    public Optional<Segment> findByCourseId(long CourseId) {
+        return segmentRepository.findByCourseId(CourseId);
     }
 
     @Override
-    public Segment findByNrAndCourseId(Long Nr, Long CourseId) {
-        return findByNrAndCourseId(Nr, CourseId);
+    public Segment findByNrAndCourseId(Long Nr, Course course) {
+        return segmentRepository.findByNrAndCourseId(Nr, course);
     }
 
-    public Long segementCount(Long CourseId){
-        Optional<Segment> segments = findSegmentByCourseId(CourseId);
-        Long count = segments.stream().count();
-        return count;
+    public Long segmentCount(long CourseId){
+        Optional<Segment> segments = findByCourseId(CourseId);
+        return segments.stream().count();
     }
 
 }
