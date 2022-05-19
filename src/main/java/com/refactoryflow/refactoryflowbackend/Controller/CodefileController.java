@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @RestController
 @CrossOrigin
@@ -27,7 +28,7 @@ public class CodefileController {
 
 
     @GetMapping("/CodeFile")
-    public List<CodeFile> getCodeFile(){
+    public Stream<CodeFile> getCodeFile(){
         return codeFileService.getAllCodeFiles();
     }
 
