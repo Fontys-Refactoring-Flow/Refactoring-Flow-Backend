@@ -40,11 +40,6 @@ public class CodefileController {
                 .body(file.getData());
     }
 
-//    @PostMapping("/CodeFile")
-//    public CodeFile createCodeFile(@RequestBody CodeFile codefile){
-//        return codeFileService.postCodeFile(codefile);
-//    }
-
     @PostMapping("CodeFile")
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file){
         String message;
