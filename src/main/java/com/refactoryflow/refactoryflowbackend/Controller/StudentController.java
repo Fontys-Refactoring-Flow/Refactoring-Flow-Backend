@@ -1,14 +1,12 @@
 package com.refactoryflow.refactoryflowbackend.Controller;
 
-import com.refactoryflow.refactoryflowbackend.Model.Challenge;
-import com.refactoryflow.refactoryflowbackend.Model.LearningOutcomes;
 import com.refactoryflow.refactoryflowbackend.Model.Student;
 import com.refactoryflow.refactoryflowbackend.Service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -23,12 +21,22 @@ public class StudentController {
     }
 
     @GetMapping("/student")
-    List<Student> findAllStudents(){
+    public List<Student> findAllStudents(){
         return studentService.findAll();
     }
 
-    @PostMapping("/student")
-    public Student startChallenge(@RequestBody Student student){
+    @GetMapping("/student/{id}")
+    public Optional<Student> findById(@PathVariable Long id){
+        return studentService.findById(id);
+    }
+
+    @PostMapping("/student/update_student")
+    public Student updateStudent(@RequestBody Student student){
         return studentService.updateStudent(student);
+    }
+
+    @GetMapping("/student/login/{email}/{password}")
+    public Student login(@PathVariable String email, @PathVariable String password){
+        return studentService.findStudentByEmailAndPassword(email, password);
     }
 }

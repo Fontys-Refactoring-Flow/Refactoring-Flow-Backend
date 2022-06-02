@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Target;
 
 import javax.persistence.*;
 import java.util.List;
@@ -16,8 +15,8 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "student")
-@JsonIgnoreProperties(value = "challengesInProgress")
-public class Student {
+@JsonIgnoreProperties(value = {"assignmentsInProgress", "learningOutcomes"})
+public class Student{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,18 +30,13 @@ public class Student {
     private String password;
     @Column(name = "semester")
     private Long semester;
-    @ManyToMany(cascade =  {CascadeType.ALL})
-    @JoinTable(
-            name = "student_challenge",
-            joinColumns = {@JoinColumn(name = "student_id")},
-            inverseJoinColumns = {@JoinColumn(name = "challenge_id")}
-    )
-    private List<Challenge> challengesInProgress;
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
-            name = "student_lo",
+            name = "student_assignment",
             joinColumns = {@JoinColumn(name = "student_id")},
-            inverseJoinColumns = {@JoinColumn(name = "lo_id")}
+            inverseJoinColumns = {@JoinColumn(name = "assignment_id")}
     )
-    private List<LearningOutcomes> learningOutcomes;
+    private List<Assignment> assignmentsInProgress;
+    @OneToOne(mappedBy = "student")
+    private LearningOutcomes learningOutcomes;
 }
