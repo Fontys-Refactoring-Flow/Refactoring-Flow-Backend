@@ -22,16 +22,10 @@ public class Assignment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long Id;
 
-    @Column(name = "name")
-    private String name;
-    @Column(name = "description")
-    private String description;
-    @Column(name = "language")
-    private String language;
-    @Column(name = "difficulty")
-    private String difficulty;
-    @Column(name = "duration")
-    private int duration;
+    @Column(name = "refactoring_type")
+    private String RefactoringType;
+    @Column(name = "level")
+    private long Level;
     @ManyToMany(mappedBy = "assignmentsInProgress")
     private List<Student> students;
 
