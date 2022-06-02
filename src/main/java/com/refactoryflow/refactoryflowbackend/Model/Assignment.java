@@ -23,9 +23,11 @@ public class Assignment {
     private long Id;
 
     @Column(name = "refactoring_type")
-    private String RefactoringType;
+    private String refactoringType;
     @Column(name = "level")
-    private long Level;
+    private long level;
+    @OneToOne(targetEntity = CodeFile.class, optional = true)
+    private CodeFile codeFile;
     @ManyToMany(mappedBy = "assignmentsInProgress")
     private List<Student> students;
 

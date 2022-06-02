@@ -29,8 +29,8 @@ public class AssignmentService implements AssignmentRepositoryCustom {
     }
 
     @Override
-    public List<Assignment> findChallengeByLanguage(String language) {
-        return assignmentRepository.findChallengeByLanguage(language);
+    public List<Assignment> findChallengeByRefactoringType(String refactoringType) {
+        return assignmentRepository.findChallengeByRefactoringType(refactoringType);
     }
 
     @Override

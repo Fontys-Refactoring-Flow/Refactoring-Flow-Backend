@@ -40,9 +40,9 @@ public class AssignmentController {
                 .orElseThrow(() -> new ResourceNotFoundException("Challenge not exist with id :" + assignmentid));
     }
 
-    @GetMapping(value = "/assignment/language/{language}")
-    public List<Assignment> getChallengeByLanguage(@PathVariable String language){
-        return assignmentService.findChallengeByLanguage(language);
+    @GetMapping(value = "/assignment/refactoring_type/{refactoringType}")
+    public List<Assignment> findChallengeByRefactoringType(@PathVariable String refactoringType){
+        return assignmentService.findChallengeByRefactoringType(refactoringType);
     }
 
     @GetMapping("/assignment/{studentid}")
