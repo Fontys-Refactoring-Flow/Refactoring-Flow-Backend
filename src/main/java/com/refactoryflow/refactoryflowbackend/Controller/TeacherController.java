@@ -3,6 +3,7 @@ package com.refactoryflow.refactoryflowbackend.Controller;
 import com.refactoryflow.refactoryflowbackend.Model.Teacher;
 import com.refactoryflow.refactoryflowbackend.Service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
