@@ -27,5 +27,4 @@ public class Teacher {
     private String password;
     @Column(name = "profile")
     private String profile;
-
 }

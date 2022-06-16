@@ -6,7 +6,7 @@ import com.refactoryflow.refactoryflowbackend.Model.Student;
 import java.util.List;
 
 public interface AssignmentRepositoryCustom {
-    List<Assignment> findChallengeByLanguage(String language);
+    List<Assignment> findChallengeByRefactoringType(String refactoringType);
 
     List<Assignment> findChallengeByStudents(Student student);
 }
