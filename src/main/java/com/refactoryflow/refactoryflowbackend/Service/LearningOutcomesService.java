@@ -2,6 +2,7 @@ package com.refactoryflow.refactoryflowbackend.Service;
 
 import com.refactoryflow.refactoryflowbackend.Model.LearningOutcomes;
 import com.refactoryflow.refactoryflowbackend.Model.Student;
+import com.refactoryflow.refactoryflowbackend.Model.User;
 import com.refactoryflow.refactoryflowbackend.Repository.LearningOutcomesRepository;
 import com.refactoryflow.refactoryflowbackend.Repository.LearningOutcomesRepositoryCustom;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class LearningOutcomesService implements LearningOutcomesRepositoryCustom
     }
 
     @Override
-    public Optional<LearningOutcomes> findLearningOutcomesByStudent(Student student) {
-        return learningOutcomesRepository.findLearningOutcomesByStudent(student);
+    public Optional<LearningOutcomes> findLearningOutcomesByUser(User user) {
+        return learningOutcomesRepository.findLearningOutcomesByUser(user);
     }
 }

@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "assignment")
-@JsonIgnoreProperties(value = "students")
+@JsonIgnoreProperties(value = "users")
 public class Assignment {
 
     @Id
@@ -29,7 +29,7 @@ public class Assignment {
     @OneToOne(targetEntity = CodeFile.class, optional = true)
     private CodeFile codeFile;
     @ManyToMany(mappedBy = "assignmentsInProgress")
-    private List<Student> students;
+    private List<User> users;
 
     public Assignment(long id) {
         Id = id;

@@ -19,8 +19,8 @@ public class LearningOutcomes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long Id;
     @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "student_id", referencedColumnName = "id")
-    private Student student;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
     @Column(name = "code_quality")
     private long codeQuality;
     @Column(name = "refactoring")

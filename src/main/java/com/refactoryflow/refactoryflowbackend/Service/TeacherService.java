@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class TeacherService implements TeacherRepositoryCustom {
 
-    @Autowired
     private final TeacherRepository teacherRepository;
 
+    @Autowired
     public TeacherService(TeacherRepository teacherRepository) {
         this.teacherRepository = teacherRepository;
     }

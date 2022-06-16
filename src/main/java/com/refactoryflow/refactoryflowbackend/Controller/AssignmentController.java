@@ -2,6 +2,7 @@ package com.refactoryflow.refactoryflowbackend.Controller;
 
 import com.refactoryflow.refactoryflowbackend.Model.Assignment;
 import com.refactoryflow.refactoryflowbackend.Model.Student;
+import com.refactoryflow.refactoryflowbackend.Model.User;
 import com.refactoryflow.refactoryflowbackend.Repository.AssignmentRepository;
 import com.refactoryflow.refactoryflowbackend.Service.AssignmentService;
 import com.refactoryflow.refactoryflowbackend.Service.StudentService;
@@ -17,12 +18,6 @@ import java.util.List;
 public class AssignmentController {
 
     AssignmentService assignmentService;
-
-    @Autowired
-    StudentService studentService;
-
-    @Autowired
-    private AssignmentRepository assignmentRepository;
 
     @Autowired
     public AssignmentController(AssignmentService assignmentService) {
@@ -45,14 +40,15 @@ public class AssignmentController {
         return assignmentService.findChallengeByRefactoringType(refactoringType);
     }
 
-    @GetMapping("/assignment/{studentid}")
-    List<Assignment> findChallengeByStudentId(@PathVariable Long studentid){
-        Student student = new Student();
-        student.setId(studentid);
-        return assignmentService.findChallengeByStudents(student);
+    @GetMapping("/assignment/{userid}")
+    List<Assignment> findChallengeByUserId(@PathVariable Long userid){
+        User user = new User();
+        user.setId(userid);
+        return assignmentService.findChallengeByUsers(user);
     }
+
     @PostMapping("/assignment")
     public Assignment createChallenge(@RequestBody Assignment assignment){
-        return assignmentRepository.save(assignment);
+        return assignmentService.save(assignment);
     }
 }

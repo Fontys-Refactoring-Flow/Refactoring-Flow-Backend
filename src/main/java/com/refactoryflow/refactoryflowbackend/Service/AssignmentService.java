@@ -2,6 +2,7 @@ package com.refactoryflow.refactoryflowbackend.Service;
 
 import com.refactoryflow.refactoryflowbackend.Model.Assignment;
 import com.refactoryflow.refactoryflowbackend.Model.Student;
+import com.refactoryflow.refactoryflowbackend.Model.User;
 import com.refactoryflow.refactoryflowbackend.Repository.AssignmentRepository;
 import com.refactoryflow.refactoryflowbackend.Repository.AssignmentRepositoryCustom;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,12 @@ public class AssignmentService implements AssignmentRepositoryCustom {
     }
 
     @Override
-    public List<Assignment> findChallengeByStudents(Student student) {
-        return assignmentRepository.findChallengeByStudents(student);
+    public List<Assignment> findChallengeByUsers(User user) {
+        return assignmentRepository.findChallengeByUsers(user);
+    }
+
+    public Assignment save(Assignment assignment){
+        return assignmentRepository.save(assignment);
     }
 
 
