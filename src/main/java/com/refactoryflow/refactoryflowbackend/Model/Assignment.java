@@ -28,6 +28,8 @@ public class Assignment {
     private long Level;
     @ManyToMany(mappedBy = "assignmentsInProgress")
     private List<Student> students;
+    @Column(name = "language")
+    private String language;
 
     public Assignment(long id) {
         Id = id;
