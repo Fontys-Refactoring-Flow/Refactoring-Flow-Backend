@@ -67,12 +67,12 @@ In this section we will discuss the steps which need to be made in order to run 
 ### Prerequisites
 
 _This  list shows the prerequisites needed to run the project._
-* java sdk
-* mysql driver
+* java 17
+* mysql
 
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
+_Below is an instruction on how to install the project for it's first time run._
 
 1. Clone the repo
    ```sh
@@ -126,17 +126,15 @@ Project Link: [https://github.com/IemandDieAbeHeet/Refactoring-Flow-Backend](htt
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
+[contributors-url]: https://github.com/IemandDieAbeHeet/Refactoring-Flow-Backend/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
+[forks-url]: https://github.com/IemandDieAbeHeet/Refactoring-Flow-Backend/network/members
 [stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
+[stars-url]: https://github.com/IemandDieAbeHeet/Refactoring-Flow-Backend/stargazers
 [issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
+[issues-url]: https://github.com/IemandDieAbeHeet/Refactoring-Flow-Backend/issues
 [license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/othneildrew
+[license-url]: https://github.com/IemandDieAbeHeet/Refactoring-Flow-Backend/blob/master/LICENSE.MD
 [product-screenshot]: images/screenshot.png
 [Spring]: https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white
 [Spring-url]: https://spring.io/
