@@ -101,6 +101,8 @@ database.
 
 See the [open issues](https://github.com/orgs/Fontys-Refactoring-Flow/issues) for a full list of proposed features (and known issues).
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <!-- CONTRIBUTING -->
 ## Contributing
 
