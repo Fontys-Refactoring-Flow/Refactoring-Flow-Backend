@@ -12,9 +12,9 @@
     The official backend repository for the Refactoring Flow project.
     <br />
     <br />
-	<a href="https://github.com/IemandDieAbeHeet/Refactoring-Flow-Backend/issues">Report Bug</a>
+	<a href="https://github.com/Fontys-Refactoring-Flow/Refactoring-Flow-Backend/issues">Report Bug</a>
     ·
-    <a href="https://github.com/IemandDieAbeHeet/Refactoring-Flow-Backend/issues">Request Feature</a>
+    <a href="https://github.com/Fontys-Refactoring-Flow/Refactoring-Flow-Backend//issues">Request Feature</a>
   </p>
 </div>
 
@@ -74,10 +74,12 @@ _This  list shows the prerequisites needed to run the project._
 
 _Below is an instruction on how to install the project for it's first time run._
 
-1. Clone the repo
+1. Fork / clone the repo
    ```sh
    git clone https://github.com/IemandDieAbeHeet/Refactoring-Flow-Backend.git
    ```
+2. Edit database settings in application.properties file to use your own
+database.
 3. Package the project
    ```sh
    mvnw package
@@ -88,6 +90,16 @@ _Below is an instruction on how to install the project for it's first time run._
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- ROADMAP -->
+## Roadmap
+
+- [ ] Implement JWT tokens
+- [ ] Import code from Git repository
+- [ ] Give teacher ability to give feedback to students
+- [ ] Make the student be able to see the feedback given by the teacher. 
+
+See the [open issues](https://github.com/orgs/Fontys-Refactoring-Flow/issues) for a full list of proposed features (and known issues).
 
 <!-- CONTRIBUTING -->
 ## Contributing
@@ -119,22 +131,22 @@ Distributed under the MIT License. See `LICENSE.md` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Project Link: [https://github.com/IemandDieAbeHeet/Refactoring-Flow-Backend](https://github.com/IemandDieAbeHeet/Refactoring-Flow-Backend)
+Project Link: [https://github.com/Fontys-Refactoring-Flow/Refactoring-Flow-Backend](https://github.com/Fontys-Refactoring-Flow/Refactoring-Flow-Backend)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/IemandDieAbeHeet/Refactoring-Flow-Backend.svg?style=for-the-badge
-[contributors-url]: https://github.com/IemandDieAbeHeet/Refactoring-Flow-Backend/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/IemandDieAbeHeet/Refactoring-Flow-Backend.svg?style=for-the-badge
-[forks-url]: https://github.com/IemandDieAbeHeet/Refactoring-Flow-Backend/network/members
-[stars-shield]: https://img.shields.io/github/stars/IemandDieAbeHeet/Refactoring-Flow-Backend?style=for-the-badge
-[stars-url]: https://github.com/IemandDieAbeHeet/Refactoring-Flow-Backend/stargazers
-[issues-shield]: https://img.shields.io/github/issues/IemandDieAbeHeet/Refactoring-Flow-Backend?style=for-the-badge
-[issues-url]: https://github.com/IemandDieAbeHeet/Refactoring-Flow-Backend/issues
-[license-shield]: https://img.shields.io/github/license/IemandDieAbeHeet/Refactoring-Flow-Backend?style=for-the-badge
-[license-url]: https://github.com/IemandDieAbeHeet/Refactoring-Flow-Backend/blob/master/LICENSE.MD
+[contributors-shield]: https://img.shields.io/github/contributors/Fontys-Refactoring-Flow/Refactoring-Flow-Backend.svg?style=for-the-badge
+[contributors-url]: https://github.com/Fontys-Refactoring-Flow/Refactoring-Flow-Backend/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Fontys-Refactoring-Flow/Refactoring-Flow-Backend.svg?style=for-the-badge
+[forks-url]: https://github.com/Fontys-Refactoring-Flow/Refactoring-Flow-Backend/network/members
+[stars-shield]: https://img.shields.io/github/stars/Fontys-Refactoring-Flow/Refactoring-Flow-Backend?style=for-the-badge
+[stars-url]: https://github.com/Fontys-Refactoring-Flow/Refactoring-Flow-Backend/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Fontys-Refactoring-Flow/Refactoring-Flow-Backend?style=for-the-badge
+[issues-url]: https://github.com/Fontys-Refactoring-Flow/Refactoring-Flow-Backend/issues
+[license-shield]: https://img.shields.io/github/license/Fontys-Refactoring-FlowRefactoring-Flow-Backend?style=for-the-badge
+[license-url]: https://github.com/Fontys-Refactoring-Flow/Refactoring-Flow-Backend/blob/master/LICENSE.MD
 [product-screenshot]: images/screenshot.png
 [Spring]: https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white
 [Spring-url]: https://spring.io/
