@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface StudentRepository extends JpaRepository<Student, Long>,
-        StudentRepositoryCustom {
+public interface StudentRepository extends JpaRepository<Student, Long> {
+    Student findStudentByEmailAndPassword(String email, String password);
 }
