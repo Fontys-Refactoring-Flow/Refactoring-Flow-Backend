@@ -1,8 +1,9 @@
 package com.refactoryflow.refactoryflowbackend.Model;
 
-import lombok.*;
-import org.springframework.context.annotation.Scope;
-import org.w3c.dom.Text;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 

@@ -23,7 +23,7 @@ public class Assignment {
     private long Id;
 
     @Column(name = "refactoring_type")
-    private String RefactoringType;
+    private String refactoringType;
     @Column(name = "level")
     private long Level;
     @ManyToMany(mappedBy = "assignmentsInProgress")

@@ -3,16 +3,13 @@ package com.refactoryflow.refactoryflowbackend.Service;
 import com.refactoryflow.refactoryflowbackend.Model.LearningOutcomes;
 import com.refactoryflow.refactoryflowbackend.Model.Student;
 import com.refactoryflow.refactoryflowbackend.Repository.LearningOutcomesRepository;
-import com.refactoryflow.refactoryflowbackend.Repository.LearningOutcomesRepositoryCustom;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class LearningOutcomesService implements LearningOutcomesRepositoryCustom {
+public class LearningOutcomesService {
 
-    @Autowired
     private final LearningOutcomesRepository learningOutcomesRepository;
 
     public LearningOutcomesService(LearningOutcomesRepository learningOutcomesRepository) {
@@ -27,7 +24,6 @@ public class LearningOutcomesService implements LearningOutcomesRepositoryCustom
         return learningOutcomesRepository.findById(id);
     }
 
-    @Override
     public Optional<LearningOutcomes> findLearningOutcomesByStudent(Student student) {
         return learningOutcomesRepository.findLearningOutcomesByStudent(student);
     }
