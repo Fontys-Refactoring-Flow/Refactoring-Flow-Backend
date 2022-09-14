@@ -76,7 +76,7 @@ _Below is an instruction on how to install the project for it's first time run._
 
 1. Fork / clone the repo
    ```sh
-   git clone https://github.com/IemandDieAbeHeet/Refactoring-Flow-Backend.git
+   git clone https://github.com/Fontys-Refactoring-Flow/Refactoring-Flow-Backend.git
    ```
 2. Edit database settings in application.properties file to use your own
 database.
