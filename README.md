@@ -99,7 +99,7 @@ database.
 - [ ] Give teacher ability to give feedback to students
 - [ ] Make the student be able to see the feedback given by the teacher. 
 
-See the [open issues](https://github.com/orgs/Fontys-Refactoring-Flow/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/Fontys-Refactoring-Flow/Refactoring-Flow-Backend/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
