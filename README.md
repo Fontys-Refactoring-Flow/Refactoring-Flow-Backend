@@ -86,7 +86,7 @@ database.
    ```
 4. Run packaged jar file
    ```sh
-   java -jar target/Refactory-Flow-Backend-0.0.1-SNAPSHOT.jar 
+   java -jar target/Refactoring-Flow-Backend-0.0.1-SNAPSHOT.jar 
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
