@@ -13,8 +13,7 @@ import java.util.Optional;
 @CrossOrigin
 @RequestMapping("api/v1/learning_outcomes")
 public class LearningOutcomesController {
-
-    LearningOutcomesService learningOutcomesService;
+    private final LearningOutcomesService learningOutcomesService;
 
     @Autowired
     public LearningOutcomesController(LearningOutcomesService learningOutcomesService) {

@@ -12,8 +12,7 @@ import java.util.Optional;
 @CrossOrigin
 @RequestMapping("api/v1/student")
 public class StudentController {
-
-    StudentService studentService;
+    private final StudentService studentService;
 
     @Autowired
     public StudentController(StudentService studentService) {

@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 @Service
@@ -21,7 +22,7 @@ public class CodeFileService {
     }
 
     public void store(MultipartFile file) throws IOException {
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         CodeFile CodeFile = new CodeFile(fileName, file.getContentType(), file.getBytes());
         codeFileRepository.save(CodeFile);
     }
@@ -32,9 +33,5 @@ public class CodeFileService {
 
     public Stream<CodeFile> getAllCodeFiles(){
         return codeFileRepository.findAll().stream();
-    }
-
-    public CodeFile postCodeFile(CodeFile codeFile){
-        return codeFileRepository.save(codeFile);
     }
 }

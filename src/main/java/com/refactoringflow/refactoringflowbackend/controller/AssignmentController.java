@@ -1,13 +1,12 @@
 package com.refactoringflow.refactoringflowbackend.controller;
 
-import com.refactoringflow.refactoringflowbackend.repository.AssignmentRepository;
+import com.refactoringflow.refactoringflowbackend.exception.ResourceNotFoundException;
 import com.refactoringflow.refactoringflowbackend.model.Assignment;
 import com.refactoringflow.refactoringflowbackend.model.Student;
+import com.refactoringflow.refactoringflowbackend.repository.AssignmentRepository;
 import com.refactoringflow.refactoringflowbackend.service.AssignmentService;
-import com.refactoringflow.refactoringflowbackend.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.refactoringflow.refactoringflowbackend.exception.ResourceNotFoundException;
 
 import java.util.List;
 
@@ -15,12 +14,12 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("api/v1/assignment")
 public class AssignmentController {
-    AssignmentService assignmentService;
+    private final AssignmentService assignmentService;
 
     private final AssignmentRepository assignmentRepository;
 
     @Autowired
-    public AssignmentController(AssignmentService assignmentService, StudentService studentService, AssignmentRepository assignmentRepository) {
+    public AssignmentController(AssignmentService assignmentService, AssignmentRepository assignmentRepository) {
         this.assignmentService = assignmentService;
         this.assignmentRepository = assignmentRepository;
     }

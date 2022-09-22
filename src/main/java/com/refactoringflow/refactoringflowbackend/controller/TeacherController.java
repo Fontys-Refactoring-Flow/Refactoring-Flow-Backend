@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @RequestMapping("api/v1/teacher")
 public class TeacherController {
-
-    TeacherService teacherService;
-
+    private final TeacherService teacherService;
     @Autowired
     public TeacherController(TeacherService teacherService) {
         this.teacherService = teacherService;
