@@ -149,7 +149,6 @@ Project Link: [https://github.com/Fontys-Refactoring-Flow/Refactoring-Flow-Backe
 [issues-url]: https://github.com/Fontys-Refactoring-Flow/Refactoring-Flow-Backend/issues
 [license-shield]: https://img.shields.io/github/license/Fontys-Refactoring-FlowRefactoring-Flow-Backend?style=for-the-badge
 [license-url]: https://github.com/Fontys-Refactoring-Flow/Refactoring-Flow-Backend/blob/master/LICENSE.MD
-[product-screenshot]: images/screenshot.png
 [Spring]: https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white
 [Spring-url]: https://spring.io/
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
