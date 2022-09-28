@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
 
 @Getter
@@ -37,6 +39,11 @@ public class Student{
             inverseJoinColumns = {@JoinColumn(name = "assignment_id")}
     )
     private List<Assignment> assignmentsInProgress;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "student_authorities", joinColumns = @JoinColumn(name = "student_id"))
+    private Collection<GrantedAuthority> authorities;
+
     @OneToOne(mappedBy = "student")
     private LearningOutcomes learningOutcomes;
 }

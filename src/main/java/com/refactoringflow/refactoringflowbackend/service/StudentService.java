@@ -31,4 +31,8 @@ public class StudentService {
     public Student findStudentByEmailAndPassword(String email, String password) {
         return studentRepository.findStudentByEmailAndPassword(email, password);
     }
+
+    public Optional<Student> loadById(Long id) {
+        return studentRepository.findById(id);
+    }
 }
