@@ -88,16 +88,16 @@ public class JwtTokenService {
     }
 
     /**
-     * Get a user by its corresponding JWT token.
+     * Get a student by its corresponding JWT token.
      * @param token The JWT token
-     * @return User
-     * @throws JwtException If the corresponding user does not exist
+     * @return Student
+     * @throws JwtException If the corresponding student does not exist
      */
     public Student getUserFromToken(String token) {
         DecodedJWT jwt = JWT.decode(token);
 
-        long id = Long.parseLong(jwt.getClaims().get("userId").toString().replaceAll("\"", ""));
-        Optional<Student> user = studentService.loadById(id);
-        return user.orElseThrow(() -> new JwtException("User not found for given JWT"));
+        long id = Long.parseLong(jwt.getClaims().get("id").toString().replaceAll("\"", ""));
+        Optional<Student> student = studentService.findById(id);
+        return student.orElseThrow(() -> new JwtException("Student not found for given JWT"));
     }
 }

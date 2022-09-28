@@ -32,7 +32,15 @@ public class StudentService {
         return studentRepository.findStudentByEmailAndPassword(email, password);
     }
 
-    public Optional<Student> loadById(Long id) {
-        return studentRepository.findById(id);
+    public Optional<Student> findByName(String name) {
+        return studentRepository.findByName(name);
+    }
+
+    public Optional<Student> findByEmail(String name) {
+        return studentRepository.findByEmail(name);
+    }
+
+    public void save(Student student) {
+        studentRepository.save(student);
     }
 }
