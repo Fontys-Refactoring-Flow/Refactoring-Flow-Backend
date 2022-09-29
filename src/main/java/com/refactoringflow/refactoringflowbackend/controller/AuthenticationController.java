@@ -47,7 +47,7 @@ public class AuthenticationController {
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<?> login(LoginRequest loginRequest) {
         Map<String, String> claims = new HashMap<>();
-        Optional<Student> student = studentService.findByName(loginRequest.username);
+        Optional<Student> student = studentService.findByName(loginRequest.name);
 
         if(student.isEmpty()) return new ResponseEntity<>(new ErrorResponse(HttpStatus.UNAUTHORIZED, "Student not found"),
                 HttpStatus.UNAUTHORIZED);
@@ -62,10 +62,10 @@ public class AuthenticationController {
                 .collect(Collectors.toList());
 
         claims.put("userId", student.get().getId().toString());
-        String jwt = jwtProvider.createJwtForClaims(loginRequest.username, claims, authorities,
+        String jwt = jwtProvider.createJwtForClaims(loginRequest.name, claims, authorities,
                 SecurityConfig.AUTHORITIES_CLAIM_NAME);
 
-        return new ResponseEntity<>(new LoginResponse(student.get().getId(), loginRequest.username, student.get().getEmail(),
+        return new ResponseEntity<>(new LoginResponse(student.get().getId(), loginRequest.name, student.get().getEmail(),
                 authorities.toArray(new String[0]), jwt,
                 refreshTokenService.generateRefreshToken(student.get().getId()).getToken(), "Bearer"), HttpStatus.OK);
     }
@@ -81,14 +81,14 @@ public class AuthenticationController {
         List<GrantedAuthority> authorityList = new ArrayList<>();
         authorityList.add(new SimpleGrantedAuthority("STUDENT"));
 
-        if(studentService.findByName(registerRequest.username).isPresent() ||
+        if(studentService.findByName(registerRequest.name).isPresent() ||
                 studentService.findByEmail(registerRequest.email).isPresent())
             return new ResponseEntity<>(
-                    new ErrorResponse(HttpStatus.UNAUTHORIZED, "Student with that username/email already exists"),
+                    new ErrorResponse(HttpStatus.UNAUTHORIZED, "Student with that name/email already exists"),
                 HttpStatus.UNAUTHORIZED);
 
         return new ResponseEntity<>(register(
-                registerRequest.username,
+                registerRequest.name,
                 registerRequest.email,
                 registerRequest.password,
                 registerRequest.semester,
@@ -150,7 +150,7 @@ public class AuthenticationController {
 
     @PostMapping("/admin/setauthorities")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<?> setAuthorities(@RequestParam String username,
+    public ResponseEntity<?> setAuthorities(@RequestParam String name,
                                                   @RequestBody Collection<String> authorities) {
         List<GrantedAuthority> authorityList = authorities
                 .stream()
@@ -160,7 +160,7 @@ public class AuthenticationController {
         if(authorityList.isEmpty() || !authorityList.contains(new SimpleGrantedAuthority("STUDENT")))
             authorityList.add(new SimpleGrantedAuthority("STUDENT"));
 
-        Optional<Student> student = studentService.findByName(username);
+        Optional<Student> student = studentService.findByName(name);
         if(student.isEmpty()) {
             return new ResponseEntity<>(new ErrorResponse(HttpStatus.NOT_FOUND, "Student not found"), HttpStatus.NOT_FOUND);
         } else {
