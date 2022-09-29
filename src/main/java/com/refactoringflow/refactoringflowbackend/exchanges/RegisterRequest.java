@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class RegisterRequest {
-    public String username;
+    public String name;
     public String email;
     public String password;
     public Long semester;

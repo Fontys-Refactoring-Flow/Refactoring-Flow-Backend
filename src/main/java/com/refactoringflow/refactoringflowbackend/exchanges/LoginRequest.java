@@ -1,11 +1,11 @@
 package com.refactoringflow.refactoringflowbackend.exchanges;
 
 public class LoginRequest {
-    public String username;
+    public String name;
     public String password;
 
-    public LoginRequest(String username, String password) {
-        this.username = username;
+    public LoginRequest(String name, String password) {
+        this.name = name;
         this.password = password;
     }
 }
