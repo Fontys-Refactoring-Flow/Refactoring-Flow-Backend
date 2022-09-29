@@ -13,3 +13,10 @@ spring.aop.proxy-target-class=true
 
 spring.servlet.multipart.max-file-size=2MB
 spring.servlet.multipart.max-request-size=2MB
+
+jwt.accessToken.expirationInMillis=3600000
+jwt.refreshToken.expirationInMillis=900000
+app.security.jwt.keystore-location=keys/keystore.jks
+app.security.jwt.keystore-password=keystore_password
+app.security.jwt.key-alias=dev
+app.security.jwt.private-key-passphrase=private_key_passphrase

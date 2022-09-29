@@ -31,4 +31,16 @@ public class StudentService {
     public Student findStudentByEmailAndPassword(String email, String password) {
         return studentRepository.findStudentByEmailAndPassword(email, password);
     }
+
+    public Optional<Student> findByName(String name) {
+        return studentRepository.findByName(name);
+    }
+
+    public Optional<Student> findByEmail(String name) {
+        return studentRepository.findByEmail(name);
+    }
+
+    public void save(Student student) {
+        studentRepository.save(student);
+    }
 }
