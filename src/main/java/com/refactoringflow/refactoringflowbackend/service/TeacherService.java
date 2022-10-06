@@ -4,6 +4,8 @@ import com.refactoringflow.refactoringflowbackend.repository.TeacherRepository;
 import com.refactoringflow.refactoringflowbackend.model.Teacher;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class TeacherService {
 
@@ -15,5 +17,9 @@ public class TeacherService {
 
     public Teacher findTeacherByEmailAndPassword(String email, String password) {
         return teacherRepository.findTeacherByEmailAndPassword(email, password);
+    }
+
+    public Optional<Teacher> findByName(String name) {
+        return teacherRepository.findByName(name);
     }
 }

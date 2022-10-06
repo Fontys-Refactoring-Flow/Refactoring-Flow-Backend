@@ -3,14 +3,8 @@ package com.refactoringflow.refactoringflowbackend.controller;
 import com.refactoringflow.refactoringflowbackend.config.SecurityConfig;
 import com.refactoringflow.refactoringflowbackend.error.exceptions.RefreshTokenException;
 import com.refactoringflow.refactoringflowbackend.exchanges.*;
-import com.refactoringflow.refactoringflowbackend.model.RefreshToken;
-import com.refactoringflow.refactoringflowbackend.model.Role;
-import com.refactoringflow.refactoringflowbackend.model.Student;
-import com.refactoringflow.refactoringflowbackend.model.User;
-import com.refactoringflow.refactoringflowbackend.service.JwtTokenService;
-import com.refactoringflow.refactoringflowbackend.service.RefreshTokenService;
-import com.refactoringflow.refactoringflowbackend.service.RoleService;
-import com.refactoringflow.refactoringflowbackend.service.StudentService;
+import com.refactoringflow.refactoringflowbackend.model.*;
+import com.refactoringflow.refactoringflowbackend.service.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,18 +21,18 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AuthenticationController {
     private final JwtTokenService jwtProvider;
-    private final StudentService studentService;
+    private final UserService userService;
     private final RoleService roleService;
     private final RefreshTokenService refreshTokenService;
     private final PasswordEncoder passwordEncoder;
 
     public AuthenticationController(JwtTokenService jwtProvider,
-                                    StudentService studentService,
+                                    UserService userService,
                                     RoleService roleService,
                                     PasswordEncoder passwordEncoder,
                                     RefreshTokenService refreshTokenService) {
         this.jwtProvider = jwtProvider;
-        this.studentService = studentService;
+        this.userService = userService;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
         this.refreshTokenService = refreshTokenService;
@@ -49,30 +43,57 @@ public class AuthenticationController {
      * @param loginRequest The login request
      * @return The response with the student's information and a JWT token
      */
-    @PostMapping(value = "/login", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ResponseEntity<?> login(LoginRequest loginRequest) {
+    @PostMapping(value = "/student/login", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public ResponseEntity<?> loginStudent(LoginRequest loginRequest) {
         Map<String, String> claims = new HashMap<>();
-        Optional<Student> student = studentService.findByName(loginRequest.name);
 
-        if(student.isEmpty()) return new ResponseEntity<>(new ErrorResponse(HttpStatus.UNAUTHORIZED, "Student not found"),
+        return loginUser(loginRequest, claims, SecurityConfig.ROLE_STUDENT);
+    }
+
+    /**
+     * Authenticate a teacher and return the teacher's information and a JWT token.
+     * @param loginRequest The login request
+     * @return The response with the teacher's information and a JWT token
+     */
+    @PostMapping(value = "/teacher/login", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public ResponseEntity<?> loginTeacher(LoginRequest loginRequest) {
+        Map<String, String> claims = new HashMap<>();
+
+        return loginUser(loginRequest, claims, SecurityConfig.ROLE_TEACHER);
+    }
+
+    /**
+    * Authenticate a user and return the user's information and a JWT token.
+    * @param loginRequest The login request
+    * @param claims The claims to add to the JWT token
+    * @return The response with the user's information and a JWT token
+    */
+    private ResponseEntity<?> loginUser(LoginRequest loginRequest, Map<String, String> claims, Role role) {
+        Optional<User> user = userService.findByName(loginRequest.name);
+
+        if(user.isEmpty()) return new ResponseEntity<>(new ErrorResponse(HttpStatus.UNAUTHORIZED, "User not found"),
                 HttpStatus.UNAUTHORIZED);
 
-        if(!passwordEncoder.matches(loginRequest.password, student.get().getPassword()))
+        if(!user.get().getRoles().contains(role))
+            return new ResponseEntity<>(new ErrorResponse(HttpStatus.UNAUTHORIZED, "Not allowed to login as this role"),
+                    HttpStatus.UNAUTHORIZED);
+
+        if(!passwordEncoder.matches(loginRequest.password, user.get().getPassword()))
             return new ResponseEntity<>(new ErrorResponse(HttpStatus.UNAUTHORIZED, "Wrong password given"),
                     HttpStatus.UNAUTHORIZED);
 
-        List<String> authorities = student.get().getAuthorities()
+        List<String> authorities = user.get().getAuthorities()
                 .stream().
                 map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
-        claims.put("userId", student.get().getId().toString());
+        claims.put("userId", user.get().getId().toString());
         String jwt = jwtProvider.createJwtForClaims(loginRequest.name, claims, authorities,
                 SecurityConfig.AUTHORITIES_CLAIM_NAME);
 
-        return new ResponseEntity<>(new LoginResponse(student.get().getId(), loginRequest.name, student.get().getEmail(),
+        return new ResponseEntity<>(new LoginResponse(user.get().getId(), loginRequest.name, user.get().getEmail(),
                 authorities.toArray(new String[0]), jwt,
-                refreshTokenService.generateRefreshToken(student.get().getId()).getToken(), "Bearer"), HttpStatus.OK);
+                refreshTokenService.generateRefreshToken(user.get().getId()).getToken(), "Bearer"), HttpStatus.OK);
     }
 
     /**
@@ -81,18 +102,18 @@ public class AuthenticationController {
      * @return The response with the student's information and a JWT token
      */
 
-    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ResponseEntity<?> register(RegisterRequest registerRequest) {
+    @PostMapping(value = "/student/register", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public ResponseEntity<?> registerStudent(RegisterRequest registerRequest) {
         List<Role> roles = new ArrayList<>();
         roles.add(roleService.findByName("STUDENT"));
 
-        if(studentService.findByName(registerRequest.name).isPresent() ||
-                studentService.findByEmail(registerRequest.email).isPresent())
+        if(userService.findByName(registerRequest.name).isPresent() ||
+                userService.findByEmail(registerRequest.email).isPresent())
             return new ResponseEntity<>(
                     new ErrorResponse(HttpStatus.UNAUTHORIZED, "Student with that name/email already exists"),
                 HttpStatus.UNAUTHORIZED);
 
-        return new ResponseEntity<>(register(
+        return new ResponseEntity<>(registerStudent(
                 registerRequest.name,
                 registerRequest.email,
                 registerRequest.password,
@@ -150,7 +171,7 @@ public class AuthenticationController {
         if(roles.isEmpty() || !roles.contains(roleService.findByName("STUDENT")))
             roles.add(roleService.findByName("STUDENT"));
 
-        return register(name, email, password, semester, new HashSet<>(roles));
+        return registerStudent(name, email, password, semester, new HashSet<>(roles));
     }
 
     @PostMapping("/admin/setauthorities")
@@ -165,17 +186,17 @@ public class AuthenticationController {
         if(roles.isEmpty() || !roles.contains(roleService.findByName("STUDENT")))
             roles.add(roleService.findByName("STUDENT"));
 
-        Optional<Student> student = studentService.findByName(name);
-        if(student.isEmpty()) {
-            return new ResponseEntity<>(new ErrorResponse(HttpStatus.NOT_FOUND, "Student not found"), HttpStatus.NOT_FOUND);
+        Optional<User> user = userService.findByName(name);
+        if(user.isEmpty()) {
+            return new ResponseEntity<>(new ErrorResponse(HttpStatus.NOT_FOUND, "User not found"), HttpStatus.NOT_FOUND);
         } else {
-            student.get().setRoles(new HashSet<>(roles));
-            studentService.save(student.get());
+            user.get().setRoles(new HashSet<>(roles));
+            userService.save(user.get());
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
 
-    private LoginResponse register(String name, String email, String password, Long semester, HashSet<Role> roles) {
+    private LoginResponse registerStudent(String name, String email, String password, Long semester, HashSet<Role> roles) {
         Student student = new Student(name,
                 email,
                 passwordEncoder.encode(password),
@@ -183,7 +204,7 @@ public class AuthenticationController {
                 new ArrayList<>(),
                 roles);
 
-        studentService.save(student);
+        userService.save(student);
 
         String jwt = jwtProvider.createJwtForUser(student);
         return new LoginResponse(student.getId(), name, email,
