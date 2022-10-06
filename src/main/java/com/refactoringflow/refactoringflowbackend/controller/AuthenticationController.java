@@ -4,16 +4,18 @@ import com.refactoringflow.refactoringflowbackend.config.SecurityConfig;
 import com.refactoringflow.refactoringflowbackend.error.exceptions.RefreshTokenException;
 import com.refactoringflow.refactoringflowbackend.exchanges.*;
 import com.refactoringflow.refactoringflowbackend.model.RefreshToken;
+import com.refactoringflow.refactoringflowbackend.model.Role;
 import com.refactoringflow.refactoringflowbackend.model.Student;
+import com.refactoringflow.refactoringflowbackend.model.User;
 import com.refactoringflow.refactoringflowbackend.service.JwtTokenService;
 import com.refactoringflow.refactoringflowbackend.service.RefreshTokenService;
+import com.refactoringflow.refactoringflowbackend.service.RoleService;
 import com.refactoringflow.refactoringflowbackend.service.StudentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,15 +28,18 @@ import java.util.stream.Collectors;
 public class AuthenticationController {
     private final JwtTokenService jwtProvider;
     private final StudentService studentService;
+    private final RoleService roleService;
     private final RefreshTokenService refreshTokenService;
     private final PasswordEncoder passwordEncoder;
 
     public AuthenticationController(JwtTokenService jwtProvider,
                                     StudentService studentService,
+                                    RoleService roleService,
                                     PasswordEncoder passwordEncoder,
                                     RefreshTokenService refreshTokenService) {
         this.jwtProvider = jwtProvider;
         this.studentService = studentService;
+        this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
         this.refreshTokenService = refreshTokenService;
     }
@@ -78,8 +83,8 @@ public class AuthenticationController {
 
     @PostMapping(value = "/register", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<?> register(RegisterRequest registerRequest) {
-        List<GrantedAuthority> authorityList = new ArrayList<>();
-        authorityList.add(new SimpleGrantedAuthority("STUDENT"));
+        List<Role> roles = new ArrayList<>();
+        roles.add(roleService.findByName("STUDENT"));
 
         if(studentService.findByName(registerRequest.name).isPresent() ||
                 studentService.findByEmail(registerRequest.email).isPresent())
@@ -92,7 +97,7 @@ public class AuthenticationController {
                 registerRequest.email,
                 registerRequest.password,
                 registerRequest.semester,
-                authorityList), HttpStatus.OK);
+                new HashSet<>(roles)), HttpStatus.OK);
     }
 
     /**
@@ -110,16 +115,16 @@ public class AuthenticationController {
         if(!refreshTokenService.isRefreshTokenValid(token.get()))
             throw new RefreshTokenException("Refresh token expired");
 
-        Student student = token.get().getStudent();
+        User user = token.get().getUser();
 
-        List<String> authorities = student.getAuthorities()
+        List<String> authorities = user.getAuthorities()
             .stream()
             .map(GrantedAuthority::getAuthority)
             .collect(Collectors.toList());
 
-        claims.put("studentId", student.getId().toString());
-        String jwt = jwtProvider.createJwtForClaims(student.getName(), claims, authorities, SecurityConfig.AUTHORITIES_CLAIM_NAME);
-        return new RefreshResponse(jwt, refreshTokenService.generateRefreshToken(student.getId()).getToken(), "Bearer");
+        claims.put("studentId", user.getId().toString());
+        String jwt = jwtProvider.createJwtForClaims(user.getName(), claims, authorities, SecurityConfig.AUTHORITIES_CLAIM_NAME);
+        return new RefreshResponse(jwt, refreshTokenService.generateRefreshToken(user.getId()).getToken(), "Bearer");
     }
 
     /**
@@ -127,56 +132,56 @@ public class AuthenticationController {
      * @param name The name
      * @param password The password
      * @param email The email
-     * @param authorities The authorities
+     * @param roleList The roles
      * @return The response with the student's information and a JWT token
      */
     @PostMapping("/admin/register")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public LoginResponse registerWithAuthorities(@RequestParam String name,
                                                  @RequestParam String password,
                                                  @RequestParam String email,
                                                  @RequestParam Long semester,
-                                                 @RequestParam Collection<String> authorities) {
-        List<GrantedAuthority> authorityList = authorities
+                                                 @RequestParam Collection<String> roleList) {
+        List<Role> roles = roleList
                 .stream()
-                .map(SimpleGrantedAuthority::new)
+                .map(roleService::findByName)
                 .collect(Collectors.toList());
 
-        if(authorityList.isEmpty() || !authorityList.contains(new SimpleGrantedAuthority("STUDENT")))
-            authorityList.add(new SimpleGrantedAuthority("STUDENT"));
+        if(roles.isEmpty() || !roles.contains(roleService.findByName("STUDENT")))
+            roles.add(roleService.findByName("STUDENT"));
 
-        return register(name, email, password, semester, authorityList);
+        return register(name, email, password, semester, new HashSet<>(roles));
     }
 
     @PostMapping("/admin/setauthorities")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<?> setAuthorities(@RequestParam String name,
-                                                  @RequestBody Collection<String> authorities) {
-        List<GrantedAuthority> authorityList = authorities
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> setRoles(@RequestParam String name,
+                                                  @RequestBody Collection<String> roleList) {
+        List<Role> roles = roleList
                 .stream()
-                .map(SimpleGrantedAuthority::new)
+                .map(roleService::findByName)
                 .collect(Collectors.toList());
 
-        if(authorityList.isEmpty() || !authorityList.contains(new SimpleGrantedAuthority("STUDENT")))
-            authorityList.add(new SimpleGrantedAuthority("STUDENT"));
+        if(roles.isEmpty() || !roles.contains(roleService.findByName("STUDENT")))
+            roles.add(roleService.findByName("STUDENT"));
 
         Optional<Student> student = studentService.findByName(name);
         if(student.isEmpty()) {
             return new ResponseEntity<>(new ErrorResponse(HttpStatus.NOT_FOUND, "Student not found"), HttpStatus.NOT_FOUND);
         } else {
-            student.get().setAuthorities(authorityList);
+            student.get().setRoles(new HashSet<>(roles));
             studentService.save(student.get());
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
 
-    private LoginResponse register(String name, String email, String password, Long semester, List<GrantedAuthority> authorityList) {
+    private LoginResponse register(String name, String email, String password, Long semester, HashSet<Role> roles) {
         Student student = new Student(name,
                 email,
                 passwordEncoder.encode(password),
                 semester,
                 new ArrayList<>(),
-                authorityList);
+                roles);
 
         studentService.save(student);
 

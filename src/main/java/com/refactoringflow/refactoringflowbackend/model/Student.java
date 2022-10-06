@@ -1,38 +1,20 @@
 package com.refactoringflow.refactoringflowbackend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.annotation.Nullable;
-import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@RequiredArgsConstructor
 @Entity
 @Table(name = "student")
 @JsonIgnoreProperties(value = {"assignmentsInProgress", "learningOutcomes"})
-public class Student{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "name")
-    @NonNull
-    private String name;
-    @Column(name = "email")
-    @NonNull
-    private String email;
-    @Column(name = "password")
-    @NonNull
-    private String password;
-    @Column(name = "semester")
+public class Student extends User {
     @NonNull
     private Long semester;
     @ManyToMany(cascade = {CascadeType.ALL})
@@ -44,12 +26,19 @@ public class Student{
     @NonNull
     private List<Assignment> assignmentsInProgress;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "student_authorities", joinColumns = @JoinColumn(name = "student_id"))
-    @NonNull
-    private Collection<GrantedAuthority> authorities;
 
-    @OneToOne(mappedBy = "student")
-    @Nullable
-    private LearningOutcomes learningOutcomes;
+    public Student(String name,
+                   String email,
+                   String password,
+                   Long semester,
+                   List<Assignment> assignmentsInProgress,
+                   Set<Role> roles) {
+        super(name, email, password, roles);
+        this.semester = semester;
+        this.assignmentsInProgress = assignmentsInProgress;
+    }
+
+    public Student() {
+        super();
+    }
 }

@@ -2,7 +2,7 @@ package com.refactoringflow.refactoringflowbackend.service;
 
 import com.refactoringflow.refactoringflowbackend.model.RefreshToken;
 import com.refactoringflow.refactoringflowbackend.repository.RefreshTokenRepository;
-import com.refactoringflow.refactoringflowbackend.repository.StudentRepository;
+import com.refactoringflow.refactoringflowbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +15,11 @@ public class RefreshTokenService {
     @Value("${jwt.refreshToken.expirationInMillis}")
     private Long refreshTokenDurationInMillis;
     private final RefreshTokenRepository refreshTokenRepository;
-    private final StudentRepository studentRepository;
+    private final UserRepository userRepository;
 
-    public RefreshTokenService(RefreshTokenRepository refreshTokenRepository, StudentRepository studentRepository) {
+    public RefreshTokenService(RefreshTokenRepository refreshTokenRepository, UserRepository userRepository) {
         this.refreshTokenRepository = refreshTokenRepository;
-        this.studentRepository = studentRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -34,22 +34,22 @@ public class RefreshTokenService {
 
     /**
      * Find a refresh token by its students ID.
-     * @param studentId The student ID
+     * @param userId The student ID
      * @return The refresh token
      */
-    public Optional<RefreshToken> getRefreshTokenByStudentId(Long studentId) {
-        return refreshTokenRepository.findByStudentId(studentId);
+    public Optional<RefreshToken> getRefreshTokenByUserId(Long userId) {
+        return refreshTokenRepository.findByUser(userRepository.findById(userId).orElseThrow());
     }
 
     /**
      * Create a new refresh token for the given student.
-     * @param studentId The student's id
+     * @param userId The student's id
      * @return The refresh token
      */
-    public RefreshToken generateRefreshToken(Long studentId) {
-        refreshTokenRepository.findByStudentId(studentId).ifPresent(refreshTokenRepository::delete);
+    public RefreshToken generateRefreshToken(Long userId) {
+        refreshTokenRepository.findByUser(userRepository.findById(userId).orElseThrow()).ifPresent(refreshTokenRepository::delete);
         RefreshToken refreshToken = new RefreshToken(
-                studentRepository.findById(studentId).orElseThrow(),
+                userRepository.findById(userId).orElseThrow(),
                 UUID.randomUUID().toString(),
                 Instant.now().plusMillis(refreshTokenDurationInMillis));
         return refreshTokenRepository.save(refreshToken);
