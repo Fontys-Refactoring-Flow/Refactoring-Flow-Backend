@@ -69,14 +69,15 @@ public class AuthenticationController {
     * @return The response with the user's information and a JWT token
     */
     private ResponseEntity<?> loginUser(LoginRequest loginRequest, Map<String, String> claims, Role role) {
-        Optional<User> user = userService.findByName(loginRequest.name);
+        Optional<User> user = userService.findByEmail(loginRequest.email);
 
         if(user.isEmpty()) return new ResponseEntity<>(new ErrorResponse(HttpStatus.UNAUTHORIZED, "User not found"),
                 HttpStatus.UNAUTHORIZED);
 
-        if(!user.get().getRoles().contains(role))
+        if(user.get().getRoles().stream().noneMatch((item) -> item.getName().equals(role.getName()))) {
             return new ResponseEntity<>(new ErrorResponse(HttpStatus.UNAUTHORIZED, "Not allowed to login as this role"),
                     HttpStatus.UNAUTHORIZED);
+        }
 
         if(!passwordEncoder.matches(loginRequest.password, user.get().getPassword()))
             return new ResponseEntity<>(new ErrorResponse(HttpStatus.UNAUTHORIZED, "Wrong password given"),
@@ -88,10 +89,10 @@ public class AuthenticationController {
                 .collect(Collectors.toList());
 
         claims.put("userId", user.get().getId().toString());
-        String jwt = jwtProvider.createJwtForClaims(loginRequest.name, claims, authorities,
+        String jwt = jwtProvider.createJwtForClaims(loginRequest.email, claims, authorities,
                 SecurityConfig.AUTHORITIES_CLAIM_NAME);
 
-        return new ResponseEntity<>(new LoginResponse(user.get().getId(), loginRequest.name, user.get().getEmail(),
+        return new ResponseEntity<>(new LoginResponse(user.get().getId(), loginRequest.email, user.get().getEmail(),
                 authorities.toArray(new String[0]), jwt,
                 refreshTokenService.generateRefreshToken(user.get().getId()).getToken(), "Bearer"), HttpStatus.OK);
     }
