@@ -1,7 +1,7 @@
 package com.refactoringflow.refactoringflowbackend.service;
 
-import com.refactoringflow.refactoringflowbackend.repository.UserRepository;
 import com.refactoringflow.refactoringflowbackend.model.Student;
+import com.refactoringflow.refactoringflowbackend.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,38 +9,37 @@ import java.util.Optional;
 
 @Service
 public class StudentService {
+    private final StudentRepository studentRepository;
 
-    private final UserRepository userRepository;
-
-    public StudentService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public StudentService(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
     }
 
     public List<Student> findAll(){
-        return userRepository.findAll();
+        return studentRepository.findAll();
     }
 
     public Student updateStudent(Student student){
-        return userRepository.save(student);
+        return studentRepository.save(student);
     }
 
     public Optional<Student> findById(Long id){
-        return userRepository.findById(id);
+        return studentRepository.findById(id);
     }
 
     public Student findStudentByEmailAndPassword(String email, String password) {
-        return userRepository.findStudentByEmailAndPassword(email, password);
+        return studentRepository.findStudentByEmailAndPassword(email, password);
     }
 
     public Optional<Student> findByName(String name) {
-        return userRepository.findByName(name);
+        return studentRepository.findByName(name);
     }
 
-    public Optional<Student> findByEmail(String name) {
-        return userRepository.findByEmail(name);
+    public Optional<Student> findByEmail(String email) {
+        return studentRepository.findByEmail(email);
     }
 
     public void save(Student student) {
-        userRepository.save(student);
+        studentRepository.save(student);
     }
 }

@@ -2,6 +2,8 @@ package com.refactoringflow.refactoringflowbackend.config;
 
 import com.refactoringflow.refactoringflowbackend.error.RestAccessDeniedHandler;
 import com.refactoringflow.refactoringflowbackend.error.RestForbiddenEntryPoint;
+import com.refactoringflow.refactoringflowbackend.model.Role;
+import com.refactoringflow.refactoringflowbackend.service.RoleService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -26,13 +28,17 @@ import java.util.List;
 )
 @Component
 public class SecurityConfig {
-
     public static final String AUTHORITIES_CLAIM_NAME = "roles";
+    public static Role ROLE_STUDENT;
+    public static Role ROLE_TEACHER;
 
     public final JwtDecoder jwtDecoder;
 
-    public SecurityConfig(JwtDecoder jwtDecoder) {
+    public SecurityConfig(JwtDecoder jwtDecoder, RoleService roleService) {
         this.jwtDecoder = jwtDecoder;
+
+        ROLE_STUDENT = roleService.findByName("STUDENT");
+        ROLE_TEACHER = roleService.findByName("TEACHER");
     }
 
     @Bean
