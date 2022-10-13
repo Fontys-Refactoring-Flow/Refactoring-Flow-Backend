@@ -94,7 +94,7 @@ database.
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Implement JWT tokens
+- [x] Implement JWT tokens
 - [ ] Import code from Git repository
 - [ ] Give teacher ability to give feedback to students
 - [ ] Make the student be able to see the feedback given by the teacher. 
