@@ -21,15 +21,15 @@ public class AssignmentService {
         return assignmentRepository.findAll();
     }
 
-    public Optional<Assignment> findById(Long challengeId) {
-        return assignmentRepository.findById(challengeId);
+    public Optional<Assignment> findById(Long assignmentId) {
+        return assignmentRepository.findById(assignmentId);
     }
 
     public List<Assignment> findAssignmentByRefactoringType(String refactoringType) {
         return assignmentRepository.findAssignmentByRefactoringType(refactoringType);
     }
 
-    public List<Assignment> findChallengeByStudent(Student student) {
+    public List<Assignment> findAssignmentByStudent(Student student) {
         return assignmentRepository.findByStudentsContaining(student);
     }
 

@@ -39,7 +39,7 @@ public class AssignmentController {
     List<Assignment> findAssignmentsByStudentId(@PathVariable Long studentId) {
         Student student = new Student();
         student.setId(studentId);
-        return assignmentService.findChallengeByStudent(student);
+        return assignmentService.findAssignmentByStudent(student);
     }
 
     @PostMapping("/assignment")
