@@ -36,7 +36,7 @@ public class AssignmentController {
     }
 
     @GetMapping("/findByStudentId/{studentId}")
-    List<Assignment> findChallengeByStudentId(@PathVariable Long studentId) {
+    List<Assignment> findAssignmentsByStudentId(@PathVariable Long studentId) {
         Student student = new Student();
         student.setId(studentId);
         return assignmentService.findChallengeByStudent(student);
