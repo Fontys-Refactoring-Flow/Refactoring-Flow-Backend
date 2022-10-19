@@ -1,6 +1,7 @@
 package com.refactoringflow.refactoringflowbackend.model;
 
 import lombok.*;
+import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 
@@ -8,23 +9,27 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
 @Entity
-@Table(name = "CodeFile")
+@Table(name = "code_file")
 public class CodeFile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long Id;
+    private long id;
 
-    private String Name;
-    private String Type;
-
+    @NonNull
+    private String name;
+    @NonNull
+    private String type;
     @Lob
-    private byte[] Data;
-
-    public CodeFile(String name, String type, byte[] data) {
-        Name = name;
-        Type = type;
-        Data = data;
-    }
+    @NonNull
+    private byte[] data;
+    @ManyToOne
+    @JoinTable(
+            name = "student_assignment_code_file",
+            joinColumns = {@JoinColumn(name = "code_file_id")},
+            inverseJoinColumns = {@JoinColumn(name = "assignment_id")}
+    )
+    private Assignment assignment;
 }

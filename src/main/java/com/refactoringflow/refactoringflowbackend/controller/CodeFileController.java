@@ -1,8 +1,10 @@
 package com.refactoringflow.refactoringflowbackend.controller;
 
-import com.refactoringflow.refactoringflowbackend.model.CodeFile;
 import com.refactoringflow.refactoringflowbackend.ResponseMessage;
+import com.refactoringflow.refactoringflowbackend.model.CodeFile;
+import com.refactoringflow.refactoringflowbackend.model.Student;
 import com.refactoringflow.refactoringflowbackend.service.CodeFileService;
+import com.refactoringflow.refactoringflowbackend.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -10,20 +12,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.stream.Stream;
+import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("api/v1/codeFile")
-public class CodefileController {
+@RequestMapping("api/v1/codefile")
+public class CodeFileController {
     private final CodeFileService codeFileService;
+    private final StudentService studentService;
     @Autowired
-    public CodefileController(CodeFileService codeFileService) {
+    public CodeFileController(CodeFileService codeFileService, StudentService studentService) {
         this.codeFileService = codeFileService;
+        this.studentService = studentService;
     }
-    @GetMapping("/")
-    public Stream<CodeFile> getCodeFile(){
-        return codeFileService.getAllCodeFiles();
+    @GetMapping("/get")
+    public List<CodeFile> getCodeFileByUser(@RequestParam String name){
+        Student student = studentService.findByName(name).orElseThrow();
+        return student.getCodeFiles();
     }
 
     @GetMapping("/{id}")
