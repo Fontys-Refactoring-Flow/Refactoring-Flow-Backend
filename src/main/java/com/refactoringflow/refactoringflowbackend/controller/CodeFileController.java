@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("api/v1/codefile")
+@RequestMapping("/api/v1/codefile")
 public class CodeFileController {
     private final CodeFileService codeFileService;
     private final StudentService studentService;
