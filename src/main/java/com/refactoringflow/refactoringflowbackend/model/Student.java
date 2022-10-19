@@ -13,18 +13,26 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "student")
-@JsonIgnoreProperties(value = {"assignmentsInProgress", "learningOutcomes"})
+@JsonIgnoreProperties(value = {"assignmentsInProgress"})
 public class Student extends User {
     @NonNull
     private Long semester;
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany
     @JoinTable(
-            name = "student_assignment",
+            name = "student_assignment_code_file",
             joinColumns = {@JoinColumn(name = "student_id")},
             inverseJoinColumns = {@JoinColumn(name = "assignment_id")}
     )
     @NonNull
     private List<Assignment> assignmentsInProgress;
+
+    @ManyToMany
+    @JoinTable(
+            name = "student_assignment_code_file",
+            joinColumns = {@JoinColumn(name = "student_id")},
+            inverseJoinColumns = {@JoinColumn(name = "code_file_id")}
+    )
+    private List<CodeFile> codeFiles;
 
 
     public Student(String name,
