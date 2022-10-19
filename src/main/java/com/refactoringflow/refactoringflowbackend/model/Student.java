@@ -2,8 +2,8 @@ package com.refactoringflow.refactoringflowbackend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
+import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.Set;
 public class Student extends User {
     @NonNull
     private Long semester;
-    @ManyToMany
+    @OneToMany
     @JoinTable(
             name = "student_assignment_code_file",
             joinColumns = {@JoinColumn(name = "student_id")},
@@ -26,12 +26,13 @@ public class Student extends User {
     @NonNull
     private List<Assignment> assignmentsInProgress;
 
-    @ManyToMany
+    @OneToMany
     @JoinTable(
             name = "student_assignment_code_file",
             joinColumns = {@JoinColumn(name = "student_id")},
             inverseJoinColumns = {@JoinColumn(name = "code_file_id")}
     )
+    @NonNull
     private List<CodeFile> codeFiles;
 
 

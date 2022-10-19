@@ -29,13 +29,6 @@ public class CodeFile {
     @JoinTable(
             name = "student_assignment_code_file",
             joinColumns = {@JoinColumn(name = "code_file_id")},
-            inverseJoinColumns = {@JoinColumn(name = "student_id")}
-    )
-    private Student student;
-    @ManyToOne
-    @JoinTable(
-            name = "student_assignment_code_file",
-            joinColumns = {@JoinColumn(name = "code_file_id")},
             inverseJoinColumns = {@JoinColumn(name = "assignment_id")}
     )
     private Assignment assignment;
