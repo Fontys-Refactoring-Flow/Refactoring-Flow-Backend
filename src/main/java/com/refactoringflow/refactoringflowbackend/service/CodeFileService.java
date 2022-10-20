@@ -23,7 +23,7 @@ public class CodeFileService {
 
     public void store(MultipartFile file) throws IOException {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
-        CodeFile CodeFile = new CodeFile(fileName, file.getContentType(), file.getBytes());
+        CodeFile CodeFile = new CodeFile(4,fileName, file.getContentType(), file.getBytes());
         codeFileRepository.save(CodeFile);
     }
 
