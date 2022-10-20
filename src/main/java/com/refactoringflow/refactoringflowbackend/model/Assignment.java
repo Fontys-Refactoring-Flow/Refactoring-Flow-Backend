@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "assignment")
-@JsonIgnoreProperties(value = "students")
+@JsonIgnoreProperties({"codeFiles","students"})
 public class Assignment {
 
     @Id

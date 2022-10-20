@@ -19,6 +19,8 @@ public class CodeFile {
     private long id;
 
     @NonNull
+    private int version;
+    @NonNull
     private String name;
     @NonNull
     private String type;
