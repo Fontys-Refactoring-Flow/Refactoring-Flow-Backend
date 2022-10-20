@@ -26,9 +26,9 @@ public class CodeFileController {
         this.studentService = studentService;
     }
     @GetMapping("/get")
-    public List<CodeFile> getCodeFileByUser(@RequestParam String name){
+    public List<CodeFile> getCodeFileByUser(@RequestParam String name, @RequestParam int assignmentID){
         Student student = studentService.findByName(name).orElseThrow();
-        return student.getCodeFiles();
+        return studentService.findCodefileByAssignmentID(student, assignmentID);
     }
 
     @GetMapping("/{id}")

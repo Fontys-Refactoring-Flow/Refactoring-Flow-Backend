@@ -1,9 +1,11 @@
 package com.refactoringflow.refactoringflowbackend.service;
 
+import com.refactoringflow.refactoringflowbackend.model.CodeFile;
 import com.refactoringflow.refactoringflowbackend.model.Student;
 import com.refactoringflow.refactoringflowbackend.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +31,16 @@ public class StudentService {
 
     public Student findStudentByEmailAndPassword(String email, String password) {
         return studentRepository.findStudentByEmailAndPassword(email, password);
+    }
+    public List<CodeFile> findCodefileByAssignmentID(Student student, int id){
+        List<CodeFile> codeFiles = new ArrayList<CodeFile>();
+        for (CodeFile codeFile: student.getCodeFiles()) {
+
+            if(codeFile.getAssignment().getId() == id){
+                codeFiles.add(codeFile);
+            }
+        }
+        return codeFiles;
     }
 
     public Optional<Student> findByName(String name) {
