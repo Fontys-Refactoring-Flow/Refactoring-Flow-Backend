@@ -25,9 +25,6 @@ public abstract class User implements UserDetails {
     @Column(name = "name")
     @NonNull
     private String name;
-    @Column(name = "username")
-    @NonNull
-    private String username;
     @Column(name = "email")
     @NonNull
     private String email;
@@ -39,7 +36,10 @@ public abstract class User implements UserDetails {
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     @NonNull
     private Set<Role> roles;
-
+    @Override
+    public String getUsername() {
+        return name;
+    }
     @Override
     public boolean isAccountNonExpired() {
         return false;

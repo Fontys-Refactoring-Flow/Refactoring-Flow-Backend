@@ -92,7 +92,7 @@ public class AuthenticationController {
         String jwt = jwtProvider.createJwtForClaims(loginRequest.email, claims, authorities,
                 SecurityConfig.AUTHORITIES_CLAIM_NAME);
 
-        return new ResponseEntity<>(new LoginResponse(user.get().getId(), loginRequest.email, user.get().getEmail(),
+        return new ResponseEntity<>(new LoginResponse(user.get().getId(), user.get().getName(), user.get().getEmail(),
                 authorities.toArray(new String[0]), jwt,
                 refreshTokenService.generateRefreshToken(user.get().getId()).getToken(), "Bearer"), HttpStatus.OK);
     }
