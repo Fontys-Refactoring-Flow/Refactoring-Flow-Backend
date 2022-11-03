@@ -88,11 +88,7 @@ database.
    ```sh
    java -jar target/Refactoring-Flow-Backend-0.0.1-SNAPSHOT.jar 
    ```
-5. Edit spring build configuration, modify option and select 'add VM options'. Put the password encoder into the VM field.
-   ```sh
-   -Djasypt.encryptor.password=RefactorenIsCool013!
-   ```
-6. Add a directory call 'Keys' int src/main/resources and add generated keystore file. You can read how to generate this file [here](https://docs.oracle.com/cd/E19509-01/820-3503/ggfen/index.html)
+6. Add a directory called 'Keys' int src/main/resources and add generated keystore file. You can read how to generate this file [here](https://docs.oracle.com/cd/E19509-01/820-3503/ggfen/index.html)
 
 7. Change active profiles to 'dev' in the build configuration
 
