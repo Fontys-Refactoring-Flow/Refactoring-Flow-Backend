@@ -88,9 +88,9 @@ database.
    ```sh
    java -jar target/Refactoring-Flow-Backend-0.0.1-SNAPSHOT.jar 
    ```
-6. Add a directory called 'Keys' int src/main/resources and add generated keystore file. You can read how to generate this file [here](https://docs.oracle.com/cd/E19509-01/820-3503/ggfen/index.html)
+5. Add a directory called 'Keys' int src/main/resources and add generated keystore file. You can read how to generate this file [here](https://docs.oracle.com/cd/E19509-01/820-3503/ggfen/index.html)
 
-7. Change active profiles to 'dev' in the build configuration
+6. Change active profiles to 'dev' in the build configuration
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
