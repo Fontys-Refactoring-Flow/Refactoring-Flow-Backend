@@ -46,12 +46,4 @@ public class StudentService {
     public Optional<Student> findByName(String name) {
         return studentRepository.findByName(name);
     }
-
-    public Optional<Student> findByEmail(String email) {
-        return studentRepository.findByEmail(email);
-    }
-
-    public void save(Student student) {
-        studentRepository.save(student);
-    }
 }

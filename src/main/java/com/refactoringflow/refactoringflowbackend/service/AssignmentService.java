@@ -25,10 +25,6 @@ public class AssignmentService {
         return assignmentRepository.findById(assignmentId);
     }
 
-    public List<Assignment> findAssignmentByRefactoringType(String refactoringType) {
-        return assignmentRepository.findAssignmentByRefactoringType(refactoringType);
-    }
-
     public List<Assignment> findAssignmentByStudent(Student student) {
         return assignmentRepository.findByStudentsContaining(student);
     }
