@@ -1,6 +1,6 @@
 package com.refactoringflow.refactoringflowbackend.service;
 
-import com.refactoringflow.refactoringflowbackend.model.Course;
+import com.refactoringflow.refactoringflowbackend.model.course.Course;
 import com.refactoringflow.refactoringflowbackend.repository.CourseRepository;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
 package com.refactoringflow.refactoringflowbackend.repository;
 
-import com.refactoringflow.refactoringflowbackend.model.CodeFile;
+import com.refactoringflow.refactoringflowbackend.model.codefile.CodeFile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

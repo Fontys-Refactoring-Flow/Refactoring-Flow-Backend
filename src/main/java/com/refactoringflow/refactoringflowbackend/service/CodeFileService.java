@@ -1,7 +1,7 @@
 package com.refactoringflow.refactoringflowbackend.service;
 
 import com.refactoringflow.refactoringflowbackend.repository.CodeFileRepository;
-import com.refactoringflow.refactoringflowbackend.model.CodeFile;
+import com.refactoringflow.refactoringflowbackend.model.codefile.CodeFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
