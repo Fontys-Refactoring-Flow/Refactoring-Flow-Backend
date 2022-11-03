@@ -33,7 +33,7 @@ public class StudentService {
         return studentRepository.findStudentByEmailAndPassword(email, password);
     }
     public List<CodeFile> findCodefileByAssignmentID(Student student, int id){
-        List<CodeFile> codeFiles = new ArrayList<CodeFile>();
+        List<CodeFile> codeFiles = new ArrayList<>();
         for (CodeFile codeFile: student.getCodeFiles()) {
 
             if(codeFile.getAssignment().getId() == id){
