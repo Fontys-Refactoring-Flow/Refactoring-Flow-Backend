@@ -1,6 +1,8 @@
-package com.refactoringflow.refactoringflowbackend.model;
+package com.refactoringflow.refactoringflowbackend.model.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.refactoringflow.refactoringflowbackend.model.Assignment;
+import com.refactoringflow.refactoringflowbackend.model.CodeFile;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.lang.NonNull;

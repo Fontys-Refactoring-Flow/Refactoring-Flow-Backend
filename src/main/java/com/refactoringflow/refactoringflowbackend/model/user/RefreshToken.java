@@ -1,4 +1,4 @@
-package com.refactoringflow.refactoringflowbackend.model;
+package com.refactoringflow.refactoringflowbackend.model.user;
 
 import lombok.*;
 

@@ -1,7 +1,7 @@
 package com.refactoringflow.refactoringflowbackend.service;
 
 import com.refactoringflow.refactoringflowbackend.model.CodeFile;
-import com.refactoringflow.refactoringflowbackend.model.Student;
+import com.refactoringflow.refactoringflowbackend.model.user.Student;
 import com.refactoringflow.refactoringflowbackend.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 

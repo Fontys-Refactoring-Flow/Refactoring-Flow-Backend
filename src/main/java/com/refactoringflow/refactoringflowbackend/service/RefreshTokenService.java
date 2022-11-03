@@ -1,6 +1,6 @@
 package com.refactoringflow.refactoringflowbackend.service;
 
-import com.refactoringflow.refactoringflowbackend.model.RefreshToken;
+import com.refactoringflow.refactoringflowbackend.model.user.RefreshToken;
 import com.refactoringflow.refactoringflowbackend.repository.RefreshTokenRepository;
 import com.refactoringflow.refactoringflowbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;

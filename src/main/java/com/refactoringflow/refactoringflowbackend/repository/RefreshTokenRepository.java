@@ -1,7 +1,7 @@
 package com.refactoringflow.refactoringflowbackend.repository;
 
-import com.refactoringflow.refactoringflowbackend.model.RefreshToken;
-import com.refactoringflow.refactoringflowbackend.model.User;
+import com.refactoringflow.refactoringflowbackend.model.user.RefreshToken;
+import com.refactoringflow.refactoringflowbackend.model.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.lang.NonNull;
 

@@ -1,6 +1,6 @@
 package com.refactoringflow.refactoringflowbackend.service;
 
-import com.refactoringflow.refactoringflowbackend.model.User;
+import com.refactoringflow.refactoringflowbackend.model.user.User;
 import com.refactoringflow.refactoringflowbackend.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
