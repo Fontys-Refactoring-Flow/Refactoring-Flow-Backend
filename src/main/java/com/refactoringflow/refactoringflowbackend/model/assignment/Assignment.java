@@ -21,14 +21,14 @@ public class Assignment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "refactoring_type")
     @NonNull
     private String refactoringType;
     @Column(name = "level")
     @NonNull
-    private long Level;
+    private Long level;
     @OneToMany
     @JoinTable(
             name = "student_assignment_code_file",
