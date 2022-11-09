@@ -1,4 +1,4 @@
-package com.refactoringflow.refactoringflowbackend.exception;
+package com.refactoringflow.refactoringflowbackend.error.exceptions;
 
 import com.refactoringflow.refactoringflowbackend.ResponseMessage;
 import org.springframework.http.HttpStatus;
@@ -11,7 +11,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class FileUploadSizeException extends ResponseEntityExceptionHandler {
     @ExceptionHandler(MaxUploadSizeExceededException.class)
-    public ResponseEntity<ResponseMessage> handleMaxSizeException(MaxUploadSizeExceededException ex){
+    public ResponseEntity<ResponseMessage> handleMaxSizeException(){
         return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage("File size is to big!"));
     }
 
