@@ -3,7 +3,7 @@ package com.refactoringflow.refactoringflowbackend.controller;
 import com.refactoringflow.refactoringflowbackend.config.SecurityConfig;
 import com.refactoringflow.refactoringflowbackend.error.exceptions.RefreshTokenException;
 import com.refactoringflow.refactoringflowbackend.exchanges.*;
-import com.refactoringflow.refactoringflowbackend.model.*;
+import com.refactoringflow.refactoringflowbackend.model.user.*;
 import com.refactoringflow.refactoringflowbackend.service.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -99,26 +99,26 @@ public class AuthenticationController {
 
     /**
      * Register a student.
-     * @param registerRequest The register request
+     * @param studentPasswordDTO The register request
      * @return The response with the student's information and a JWT token
      */
 
     @PostMapping(value = "/student/register", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ResponseEntity<?> registerStudent(RegisterRequest registerRequest) {
+    public ResponseEntity<?> registerStudent(StudentPasswordDTO studentPasswordDTO) {
         List<Role> roles = new ArrayList<>();
         roles.add(roleService.findByName("STUDENT"));
 
-        if(userService.findByName(registerRequest.name).isPresent() ||
-                userService.findByEmail(registerRequest.email).isPresent())
+        if(userService.findByName(studentPasswordDTO.name).isPresent() ||
+                userService.findByEmail(studentPasswordDTO.email).isPresent())
             return new ResponseEntity<>(
                     new ErrorResponse(HttpStatus.UNAUTHORIZED, "Student with that name/email already exists"),
                 HttpStatus.UNAUTHORIZED);
 
         return new ResponseEntity<>(registerStudent(
-                registerRequest.name,
-                registerRequest.email,
-                registerRequest.password,
-                registerRequest.semester,
+                studentPasswordDTO.name,
+                studentPasswordDTO.email,
+                studentPasswordDTO.password,
+                studentPasswordDTO.semester,
                 new HashSet<>(roles)), HttpStatus.OK);
     }
 
@@ -128,7 +128,7 @@ public class AuthenticationController {
      * @return The response with the refreshed JWT token and a new refresh token.
      */
     @PostMapping(value = "/refresh")
-    public RefreshResponse refresh(@RequestBody RefreshRequest refreshRequest) {
+    public RefreshTokenDTO refresh(@RequestBody RefreshRequest refreshRequest) {
         Map<String, String> claims = new HashMap<>();
         Optional<RefreshToken> token = refreshTokenService.getRefreshToken(refreshRequest.refreshToken);
 
@@ -146,7 +146,7 @@ public class AuthenticationController {
 
         claims.put("studentId", user.getId().toString());
         String jwt = jwtProvider.createJwtForClaims(user.getName(), claims, authorities, SecurityConfig.AUTHORITIES_CLAIM_NAME);
-        return new RefreshResponse(jwt, refreshTokenService.generateRefreshToken(user.getId()).getToken(), "Bearer");
+        return new RefreshTokenDTO(jwt, refreshTokenService.generateRefreshToken(user.getId()).getToken(), "Bearer");
     }
 
     /**

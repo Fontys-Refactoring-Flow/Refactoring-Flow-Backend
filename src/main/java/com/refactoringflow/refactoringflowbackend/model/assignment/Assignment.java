@@ -1,6 +1,8 @@
-package com.refactoringflow.refactoringflowbackend.model;
+package com.refactoringflow.refactoringflowbackend.model.assignment;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.refactoringflow.refactoringflowbackend.model.codefile.CodeFile;
+import com.refactoringflow.refactoringflowbackend.model.user.Student;
 import lombok.*;
 import org.springframework.lang.NonNull;
 
@@ -19,14 +21,14 @@ public class Assignment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "refactoring_type")
     @NonNull
     private String refactoringType;
     @Column(name = "level")
     @NonNull
-    private long Level;
+    private Long level;
     @OneToMany
     @JoinTable(
             name = "student_assignment_code_file",

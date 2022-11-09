@@ -2,7 +2,7 @@ package com.refactoringflow.refactoringflowbackend.config;
 
 import com.refactoringflow.refactoringflowbackend.error.RestAccessDeniedHandler;
 import com.refactoringflow.refactoringflowbackend.error.RestForbiddenEntryPoint;
-import com.refactoringflow.refactoringflowbackend.model.Role;
+import com.refactoringflow.refactoringflowbackend.model.user.Role;
 import com.refactoringflow.refactoringflowbackend.service.RoleService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;

@@ -1,7 +1,7 @@
 package com.refactoringflow.refactoringflowbackend.service;
 
-import com.refactoringflow.refactoringflowbackend.model.CodeFile;
-import com.refactoringflow.refactoringflowbackend.model.Student;
+import com.refactoringflow.refactoringflowbackend.model.codefile.CodeFile;
+import com.refactoringflow.refactoringflowbackend.model.user.Student;
 import com.refactoringflow.refactoringflowbackend.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +33,7 @@ public class StudentService {
         return studentRepository.findStudentByEmailAndPassword(email, password);
     }
     public List<CodeFile> findCodefileByAssignmentID(Student student, int id){
-        List<CodeFile> codeFiles = new ArrayList<CodeFile>();
+        List<CodeFile> codeFiles = new ArrayList<>();
         for (CodeFile codeFile: student.getCodeFiles()) {
 
             if(codeFile.getAssignment().getId() == id){
@@ -45,13 +45,5 @@ public class StudentService {
 
     public Optional<Student> findByName(String name) {
         return studentRepository.findByName(name);
-    }
-
-    public Optional<Student> findByEmail(String email) {
-        return studentRepository.findByEmail(email);
-    }
-
-    public void save(Student student) {
-        studentRepository.save(student);
     }
 }

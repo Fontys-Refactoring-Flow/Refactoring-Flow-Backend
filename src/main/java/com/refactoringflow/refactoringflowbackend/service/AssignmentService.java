@@ -1,8 +1,8 @@
 package com.refactoringflow.refactoringflowbackend.service;
 
 import com.refactoringflow.refactoringflowbackend.repository.AssignmentRepository;
-import com.refactoringflow.refactoringflowbackend.model.Assignment;
-import com.refactoringflow.refactoringflowbackend.model.Student;
+import com.refactoringflow.refactoringflowbackend.model.assignment.Assignment;
+import com.refactoringflow.refactoringflowbackend.model.user.Student;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,10 +23,6 @@ public class AssignmentService {
 
     public Optional<Assignment> findById(Long assignmentId) {
         return assignmentRepository.findById(assignmentId);
-    }
-
-    public List<Assignment> findAssignmentByRefactoringType(String refactoringType) {
-        return assignmentRepository.findAssignmentByRefactoringType(refactoringType);
     }
 
     public List<Assignment> findAssignmentByStudent(Student student) {

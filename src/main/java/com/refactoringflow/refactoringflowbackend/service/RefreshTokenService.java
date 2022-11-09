@@ -1,6 +1,6 @@
 package com.refactoringflow.refactoringflowbackend.service;
 
-import com.refactoringflow.refactoringflowbackend.model.RefreshToken;
+import com.refactoringflow.refactoringflowbackend.model.user.RefreshToken;
 import com.refactoringflow.refactoringflowbackend.repository.RefreshTokenRepository;
 import com.refactoringflow.refactoringflowbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,15 +33,6 @@ public class RefreshTokenService {
 
 
     /**
-     * Find a refresh token by its students ID.
-     * @param userId The student ID
-     * @return The refresh token
-     */
-    public Optional<RefreshToken> getRefreshTokenByUserId(Long userId) {
-        return refreshTokenRepository.findByUser(userRepository.findById(userId).orElseThrow());
-    }
-
-    /**
      * Create a new refresh token for the given student.
      * @param userId The student's id
      * @return The refresh token
@@ -67,9 +58,5 @@ public class RefreshTokenService {
             refreshTokenRepository.delete(refreshToken);
             return false;
         }
-    }
-
-    public void deleteRefreshToken(Long id) {
-        refreshTokenRepository.deleteById(id);
     }
 }

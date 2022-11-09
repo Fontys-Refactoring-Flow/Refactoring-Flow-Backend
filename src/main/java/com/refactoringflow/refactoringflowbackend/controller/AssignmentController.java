@@ -1,8 +1,8 @@
 package com.refactoringflow.refactoringflowbackend.controller;
 
-import com.refactoringflow.refactoringflowbackend.exception.ResourceNotFoundException;
-import com.refactoringflow.refactoringflowbackend.model.Assignment;
-import com.refactoringflow.refactoringflowbackend.model.Student;
+import com.refactoringflow.refactoringflowbackend.error.exceptions.ResourceNotFoundException;
+import com.refactoringflow.refactoringflowbackend.model.assignment.Assignment;
+import com.refactoringflow.refactoringflowbackend.model.user.Student;
 import com.refactoringflow.refactoringflowbackend.repository.AssignmentRepository;
 import com.refactoringflow.refactoringflowbackend.service.AssignmentService;
 import org.springframework.beans.factory.annotation.Autowired;

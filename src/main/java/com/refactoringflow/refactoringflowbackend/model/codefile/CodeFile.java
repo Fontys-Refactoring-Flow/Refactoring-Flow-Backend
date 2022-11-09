@@ -1,5 +1,6 @@
-package com.refactoringflow.refactoringflowbackend.model;
+package com.refactoringflow.refactoringflowbackend.model.codefile;
 
+import com.refactoringflow.refactoringflowbackend.model.assignment.Assignment;
 import lombok.*;
 import org.springframework.lang.NonNull;
 
@@ -16,7 +17,7 @@ public class CodeFile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @NonNull
     private int version;

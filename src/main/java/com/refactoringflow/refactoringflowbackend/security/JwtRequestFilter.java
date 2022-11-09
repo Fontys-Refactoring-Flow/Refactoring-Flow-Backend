@@ -4,7 +4,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.refactoringflow.refactoringflowbackend.error.exceptions.ExpiredJwtException;
 import com.refactoringflow.refactoringflowbackend.exchanges.ErrorResponse;
-import com.refactoringflow.refactoringflowbackend.model.Student;
+import com.refactoringflow.refactoringflowbackend.model.user.Student;
 import com.refactoringflow.refactoringflowbackend.service.JwtTokenService;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
