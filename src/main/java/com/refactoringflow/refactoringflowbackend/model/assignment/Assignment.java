@@ -29,6 +29,12 @@ public class Assignment {
     @Column(name = "level")
     @NonNull
     private Long level;
+    @Column(name = "description")
+    @NonNull
+    private String description;
+    @Column(name = "risks")
+    @NonNull
+    private String risks;
     @OneToMany
     @JoinTable(
             name = "student_assignment_code_file",

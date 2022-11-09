@@ -9,6 +9,8 @@ public record AssignmentDTO (
         Long id,
         String refactoringType,
         Long level,
+        String description,
+        String risks,
         List<StudentDTO> students,
         List<CodeFileDTO> codeFiles,
         String language
