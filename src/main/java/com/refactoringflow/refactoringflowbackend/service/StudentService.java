@@ -1,5 +1,6 @@
 package com.refactoringflow.refactoringflowbackend.service;
 
+import com.refactoringflow.refactoringflowbackend.model.assignment.Assignment;
 import com.refactoringflow.refactoringflowbackend.model.codefile.CodeFile;
 import com.refactoringflow.refactoringflowbackend.model.user.Student;
 import com.refactoringflow.refactoringflowbackend.repository.StudentRepository;
@@ -41,6 +42,16 @@ public class StudentService {
             }
         }
         return codeFiles;
+    }
+
+    public void setCodeFileByAssignmentID(Student student, Assignment assignment, CodeFile codeFile){
+        List<Assignment> assignments = student.getAssignmentsInProgress();
+        assignments.add(assignment);
+        student.setAssignmentsInProgress(assignments);
+        List<CodeFile> codeFiles = student.getCodeFiles();
+        codeFiles.add(codeFile);
+        student.setCodeFiles(codeFiles);
+        studentRepository.save(student);
     }
 
     public Optional<Student> findByName(String name) {

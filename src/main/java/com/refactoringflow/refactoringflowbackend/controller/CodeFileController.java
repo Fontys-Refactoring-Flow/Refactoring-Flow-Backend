@@ -40,10 +40,10 @@ public class CodeFileController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file){
+    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("userId") int userId, @RequestParam("assignmentId") int assignmentId, @RequestParam("code") String code, @RequestParam("version") int version){
         String message;
         try{
-            codeFileService.store(file);
+            codeFileService.store(code, assignmentId,userId,version);
             message = "uploaded file successfully";
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
         }

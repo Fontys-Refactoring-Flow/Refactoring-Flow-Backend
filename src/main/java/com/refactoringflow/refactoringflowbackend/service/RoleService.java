@@ -3,6 +3,7 @@ package com.refactoringflow.refactoringflowbackend.service;
 import com.refactoringflow.refactoringflowbackend.model.user.Role;
 import com.refactoringflow.refactoringflowbackend.repository.RoleRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 public class RoleService {
