@@ -1,5 +1,9 @@
 package com.refactoringflow.refactoringflowbackend.service;
 
+import com.github.difflib.DiffUtils;
+import com.github.difflib.UnifiedDiffUtils;
+import com.github.difflib.patch.AbstractDelta;
+import com.github.difflib.patch.Patch;
 import com.refactoringflow.refactoringflowbackend.model.AssignmentCodeFileStudent;
 import com.refactoringflow.refactoringflowbackend.model.assignment.Assignment;
 import com.refactoringflow.refactoringflowbackend.model.codefile.CodeFile;
@@ -10,6 +14,11 @@ import com.refactoringflow.refactoringflowbackend.repository.CodeFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -51,4 +60,20 @@ public class CodeFileService {
         return codeFileRepository.findById(id).orElseThrow();
     }
 
+    public List<String> createFile(Patch<String> patch, CodeFile codeFile) {
+        try {
+
+
+            List oldFileText = new ArrayList<String>();
+            for (String line : new String(codeFile.getData()).split("\\r?\\n")) {
+                oldFileText.add(line);
+            }
+
+            List<String> patchedText = DiffUtils.patch(oldFileText, patch);
+            return patchedText;
+        } catch (Exception exception) {
+            System.out.println(exception);
+            return null;
+        }
+    }
 }
