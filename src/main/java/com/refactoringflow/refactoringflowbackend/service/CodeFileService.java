@@ -47,7 +47,6 @@ public class CodeFileService {
                 assignment.orElseThrow().getRefactoringType(),
                 "text/x-java-source",
                 code.getBytes());
-
         codeFileRepository.save(codeFile);
         assigmentCodeFileStudentRepository.save(
                 new AssignmentCodeFileStudent(student.get(),
@@ -60,12 +59,12 @@ public class CodeFileService {
         return codeFileRepository.findById(id).orElseThrow();
     }
 
-    public List<String> createFile(Patch<String> patch, CodeFile codeFile) {
+    public List<String> createFile(Patch<String> patch, CodeFile oldFile) {
         try {
 
 
             List oldFileText = new ArrayList<String>();
-            for (String line : new String(codeFile.getData()).split("\\r?\\n")) {
+            for (String line : new String(oldFile.getData()).split("\\r?\\n")) {
                 oldFileText.add(line);
             }
 
@@ -75,5 +74,21 @@ public class CodeFileService {
             System.out.println(exception);
             return null;
         }
+    }
+
+    public Patch<String> saveFile(CodeFile oldFile, CodeFile newFile){
+        List oldFileText = new ArrayList<String>();
+        for(String line : new String(oldFile.getData()).split("\\r?\\n")){
+            oldFileText.add(line);
+        }
+
+        List newFileText = new ArrayList<String>();
+        for(String line : new String(newFile.getData()).split("\\r?\\n")){
+            newFileText.add(line);
+        }
+
+        Patch<String> patch = DiffUtils.diff(oldFileText, newFileText);
+
+        return patch;
     }
 }
