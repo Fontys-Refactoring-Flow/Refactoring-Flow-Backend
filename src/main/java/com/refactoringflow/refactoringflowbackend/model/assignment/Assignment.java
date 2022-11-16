@@ -35,21 +35,6 @@ public class Assignment {
     @Column(name = "risks")
     @NonNull
     private String risks;
-    @OneToMany
-    @JoinTable(
-            name = "student_assignment_code_file",
-            joinColumns = {@JoinColumn(name = "assignment_id")},
-            inverseJoinColumns = {@JoinColumn(name = "student_id")}
-    )
-    @NonNull
-    private List<Student> students;
-    @OneToMany
-    @JoinTable(
-            name = "student_assignment_code_file",
-            joinColumns = {@JoinColumn(name = "assignment_id")},
-            inverseJoinColumns = {@JoinColumn(name = "code_file_id")}
-    )
-    private List<CodeFile> codeFiles;
     @Column(name = "language")
     @NonNull
     private String language;

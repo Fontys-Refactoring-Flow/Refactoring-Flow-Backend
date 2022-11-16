@@ -1,8 +1,11 @@
 package com.refactoringflow.refactoringflowbackend.service;
 
-import com.refactoringflow.refactoringflowbackend.model.assignment.Assignment;
+import com.refactoringflow.refactoringflowbackend.model.AssignmentCodeFileStudent;
 import com.refactoringflow.refactoringflowbackend.model.codefile.CodeFile;
 import com.refactoringflow.refactoringflowbackend.model.user.Student;
+import com.refactoringflow.refactoringflowbackend.repository.AssigmentCodeFileStudentRepository;
+import com.refactoringflow.refactoringflowbackend.repository.AssignmentRepository;
+import com.refactoringflow.refactoringflowbackend.repository.CodeFileRepository;
 import com.refactoringflow.refactoringflowbackend.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +16,17 @@ import java.util.Optional;
 @Service
 public class StudentService {
     private final StudentRepository studentRepository;
+    private final AssignmentRepository assignmentRepository;
+    private final AssigmentCodeFileStudentRepository assigmentCodeFileStudentRepository;
+    private final CodeFileRepository codeFileRepository;
 
-    public StudentService(StudentRepository studentRepository) {
+    public StudentService(StudentRepository studentRepository, AssignmentRepository assignmentRepository,
+                          CodeFileRepository codeFileRepository,
+                          AssigmentCodeFileStudentRepository assigmentCodeFileStudentRepository) {
         this.studentRepository = studentRepository;
+        this.assignmentRepository = assignmentRepository;
+        this.assigmentCodeFileStudentRepository = assigmentCodeFileStudentRepository;
+        this.codeFileRepository = codeFileRepository;
     }
 
     public List<Student> findAll(){
@@ -33,25 +44,17 @@ public class StudentService {
     public Student findStudentByEmailAndPassword(String email, String password) {
         return studentRepository.findStudentByEmailAndPassword(email, password);
     }
-    public List<CodeFile> findCodefileByAssignmentID(Student student, int id){
+    public List<CodeFile> findCodefileByAssignmentID(Student student, int id) {
+        List<AssignmentCodeFileStudent> assignmentCodeFileStudents =
+                assigmentCodeFileStudentRepository.findAssignmentCodeFilesStudentByStudent(student);
         List<CodeFile> codeFiles = new ArrayList<>();
-        for (CodeFile codeFile: student.getCodeFiles()) {
+        for (AssignmentCodeFileStudent assignmentCodeFileStudent: assignmentCodeFileStudents) {
 
-            if(codeFile.getAssignment().getId() == id){
-                codeFiles.add(codeFile);
+            if(assignmentCodeFileStudent.getAssignment().getId() == id){
+                codeFiles.add(assignmentCodeFileStudent.getCodeFile());
             }
         }
         return codeFiles;
-    }
-
-    public void setCodeFileByAssignmentID(Student student, Assignment assignment, CodeFile codeFile){
-        List<Assignment> assignments = student.getAssignmentsInProgress();
-        assignments.add(assignment);
-        student.setAssignmentsInProgress(assignments);
-        List<CodeFile> codeFiles = student.getCodeFiles();
-        codeFiles.add(codeFile);
-        student.setCodeFiles(codeFiles);
-        studentRepository.save(student);
     }
 
     public Optional<Student> findByName(String name) {
