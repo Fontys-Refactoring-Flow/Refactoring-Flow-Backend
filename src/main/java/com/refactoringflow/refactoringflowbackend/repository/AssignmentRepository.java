@@ -11,5 +11,4 @@ import java.util.List;
 @Repository
 public interface AssignmentRepository extends JpaRepository<Assignment, Long> {
     List<Assignment> findAssignmentByRefactoringType(String refactoringType);
-    List<Assignment> findByStudentsContaining(Student student);
 }

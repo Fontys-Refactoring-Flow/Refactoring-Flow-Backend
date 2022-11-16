@@ -1,6 +1,7 @@
 package com.refactoringflow.refactoringflowbackend.model.codefile;
 
 import com.refactoringflow.refactoringflowbackend.model.assignment.Assignment;
+import com.refactoringflow.refactoringflowbackend.model.user.Student;
 import lombok.*;
 import org.springframework.lang.NonNull;
 
@@ -28,11 +29,4 @@ public class CodeFile {
     @Lob
     @NonNull
     private byte[] data;
-    @ManyToOne
-    @JoinTable(
-            name = "student_assignment_code_file",
-            joinColumns = {@JoinColumn(name = "code_file_id")},
-            inverseJoinColumns = {@JoinColumn(name = "assignment_id")}
-    )
-    private Assignment assignment;
 }

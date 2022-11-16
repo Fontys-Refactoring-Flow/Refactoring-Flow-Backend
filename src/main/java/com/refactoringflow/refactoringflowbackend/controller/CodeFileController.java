@@ -10,7 +10,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -40,10 +39,11 @@ public class CodeFileController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("userId") int userId, @RequestParam("assignmentId") int assignmentId, @RequestParam("code") String code, @RequestParam("version") int version){
+    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("userId") Long userId, @RequestParam("assignmentId") Long assignmentId, @RequestParam("code") String code, @RequestParam("version") int version){
         String message;
+        codeFileService.save(code, assignmentId,userId,version);
         try{
-            codeFileService.store(code, assignmentId,userId,version);
+
             message = "uploaded file successfully";
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
         }

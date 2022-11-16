@@ -28,12 +28,10 @@ public class CodeFileMapper implements EntityMapper<CodeFileDTO, CodeFile> {
     @Override
     public CodeFile toEntity(CodeFileDTO codeFileDTO) {
         return new CodeFile(
-            codeFileDTO.id(),
             codeFileDTO.version(),
             codeFileDTO.name(),
             codeFileDTO.type(),
-            codeFileDTO.data(),
-                null
+            codeFileDTO.data()
         );
     }
 }
