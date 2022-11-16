@@ -7,6 +7,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.refactoringflow.refactoringflowbackend.config.SecurityConfig;
 import com.refactoringflow.refactoringflowbackend.model.user.Student;
+import com.refactoringflow.refactoringflowbackend.model.user.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtException;
@@ -47,25 +48,27 @@ public class JwtTokenService {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
-        return createJwtForClaims(student.getName(), claims, authorities, SecurityConfig.AUTHORITIES_CLAIM_NAME);
+        return createJwtForClaims(student.getId(), claims, authorities, SecurityConfig.AUTHORITIES_CLAIM_NAME);
     }
 
     /**
      * Create a JWT for the given claims.
      *
-     * @param subject The subject
+     * @param userId The subject's user ID
      * @param claims  The claims
      * @return The generated JWT
      */
-    public String createJwtForClaims(String subject, Map<String, String> claims, List<String> authorities, String authoritiesClaimName) {
+    public String createJwtForClaims(Long userId, Map<String, String> claims, List<String> authorities, String authoritiesClaimName) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(Instant.now().toEpochMilli());
         calendar.add(Calendar.DATE, 1);
 
-        JWTCreator.Builder jwtBuilder = JWT.create().withSubject(subject)
+        User user = studentService.findById(userId).orElseThrow(() -> new JwtException("User not found"));
+        JWTCreator.Builder jwtBuilder = JWT.create().withSubject(user.getName())
                 .withIssuedAt(Date.from(Instant.now()))
                 .withExpiresAt(Date.from(Instant.now().plusMillis(accessTokenDurationInMillis)));
 
+        claims.put("id", user.getId().toString());
         claims.forEach(jwtBuilder::withClaim);
         jwtBuilder.withArrayClaim(authoritiesClaimName, authorities.toArray(new String[0]));
 
