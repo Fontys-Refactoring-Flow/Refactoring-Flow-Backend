@@ -23,8 +23,6 @@ public class CodeFile {
     @NonNull
     private int version;
     @NonNull
-    private String name;
-    @NonNull
     private String type;
     @Lob
     @NonNull
