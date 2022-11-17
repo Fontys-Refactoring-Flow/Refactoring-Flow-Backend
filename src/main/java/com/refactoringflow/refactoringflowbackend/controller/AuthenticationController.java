@@ -144,7 +144,7 @@ public class AuthenticationController {
             .collect(Collectors.toList());
 
         String jwt = jwtProvider.createJwtForClaims(user.getId(), claims, authorities, SecurityConfig.AUTHORITIES_CLAIM_NAME);
-        return new RefreshTokenDTO(jwt, refreshTokenService.generateRefreshToken(user.getId()).getToken(), "Bearer");
+        return new RefreshTokenDTO(refreshTokenService.generateRefreshToken(user.getId()).getToken(), jwt, "Bearer");
     }
 
     /**
