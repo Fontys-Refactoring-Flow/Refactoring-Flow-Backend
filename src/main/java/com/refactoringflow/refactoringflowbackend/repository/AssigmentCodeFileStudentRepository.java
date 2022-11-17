@@ -1,6 +1,7 @@
 package com.refactoringflow.refactoringflowbackend.repository;
 
 import com.refactoringflow.refactoringflowbackend.model.AssignmentCodeFileStudent;
+import com.refactoringflow.refactoringflowbackend.model.assignment.Assignment;
 import com.refactoringflow.refactoringflowbackend.model.codefile.CodeFile;
 import com.refactoringflow.refactoringflowbackend.model.user.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,4 +12,5 @@ import java.util.List;
 @Repository
 public interface AssigmentCodeFileStudentRepository extends JpaRepository<AssignmentCodeFileStudent, Long> {
     List<AssignmentCodeFileStudent> findAssignmentCodeFilesStudentByStudent(Student student);
+    List<AssignmentCodeFileStudent> findAssignmentCodeFileStudentByAssignment(Assignment assignment);
 }
