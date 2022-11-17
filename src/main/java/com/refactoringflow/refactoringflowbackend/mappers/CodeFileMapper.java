@@ -19,7 +19,6 @@ public class CodeFileMapper implements EntityMapper<CodeFileDTO, CodeFile> {
         return new CodeFileDTO(
             item.getId(),
             item.getVersion(),
-            item.getName(),
             item.getType(),
             item.getData()
         );
@@ -29,7 +28,6 @@ public class CodeFileMapper implements EntityMapper<CodeFileDTO, CodeFile> {
     public CodeFile toEntity(CodeFileDTO codeFileDTO) {
         return new CodeFile(
             codeFileDTO.version(),
-            codeFileDTO.name(),
             codeFileDTO.type(),
             codeFileDTO.data()
         );

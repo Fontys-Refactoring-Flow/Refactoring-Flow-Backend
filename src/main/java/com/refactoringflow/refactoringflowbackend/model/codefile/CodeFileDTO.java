@@ -1,5 +1,5 @@
 package com.refactoringflow.refactoringflowbackend.model.codefile;
 
 
-public record CodeFileDTO(Long id, Integer version, String name, String type, byte[] data) {
+public record CodeFileDTO(Long id, Integer version, String type, byte[] data) {
 }
