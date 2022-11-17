@@ -1,6 +1,7 @@
 package com.refactoringflow.refactoringflowbackend.controller;
 
 import com.refactoringflow.refactoringflowbackend.ResponseMessage;
+import com.refactoringflow.refactoringflowbackend.exchanges.CodeFileRequest;
 import com.refactoringflow.refactoringflowbackend.model.codefile.CodeFile;
 import com.refactoringflow.refactoringflowbackend.model.user.Student;
 import com.refactoringflow.refactoringflowbackend.service.CodeFileService;
@@ -12,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -41,17 +41,11 @@ public class CodeFileController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestBody Map<String,String> MapDate){
-        String message;
-        codeFileService.save(MapDate.get("code"), (long)Integer.parseInt(MapDate.get("assignmentId")), (long) Integer.parseInt(MapDate.get("userId")), Integer.parseInt(MapDate.get("version")));
-        try{
-
-            message = "uploaded file successfully";
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
-        }
-        catch(Exception e){
-            message = "upload failed";
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
-        }
+    public ResponseEntity<String> uploadFile(@RequestBody CodeFileRequest codeFileRequest){
+        codeFileService.save(codeFileRequest.code,
+                codeFileRequest.assignmentId,
+                codeFileRequest.userId,
+                codeFileRequest.version);
+        return ResponseEntity.ok("File saved successfully");
     }
 }
