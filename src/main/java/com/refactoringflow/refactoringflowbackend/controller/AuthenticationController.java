@@ -98,26 +98,26 @@ public class AuthenticationController {
 
     /**
      * Register a student.
-     * @param studentPasswordDTO The register request
+     * @param registerStudentRequest The register request
      * @return The response with the student's information and a JWT token
      */
 
     @PostMapping(value = "/student/register", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ResponseEntity<?> registerStudent(StudentPasswordDTO studentPasswordDTO) {
+    public ResponseEntity<?> registerStudent(RegisterStudentRequest registerStudentRequest) {
         List<Role> roles = new ArrayList<>();
         roles.add(roleService.findByName("STUDENT"));
 
-        if(userService.findByName(studentPasswordDTO.name).isPresent() ||
-                userService.findByEmail(studentPasswordDTO.email).isPresent())
+        if(userService.findByName(registerStudentRequest.name).isPresent() ||
+                userService.findByEmail(registerStudentRequest.email).isPresent())
             return new ResponseEntity<>(
                     new ErrorResponse(HttpStatus.UNAUTHORIZED, "Student with that name/email already exists"),
                 HttpStatus.UNAUTHORIZED);
 
         return new ResponseEntity<>(registerStudent(
-                studentPasswordDTO.name,
-                studentPasswordDTO.email,
-                studentPasswordDTO.password,
-                studentPasswordDTO.semester,
+                registerStudentRequest.name,
+                registerStudentRequest.email,
+                registerStudentRequest.password,
+                registerStudentRequest.semester,
                 new HashSet<>(roles)), HttpStatus.OK);
     }
 
