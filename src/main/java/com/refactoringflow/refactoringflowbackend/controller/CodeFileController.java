@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -40,9 +41,9 @@ public class CodeFileController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("userId") Long userId, @RequestParam("assignmentId") Long assignmentId, @RequestParam("code") String code, @RequestParam("version") int version){
+    public ResponseEntity<ResponseMessage> uploadFile(@RequestBody Map<String,String> MapDate){
         String message;
-        codeFileService.save(code, assignmentId,userId,version);
+        codeFileService.save(MapDate.get("code"), (long)Integer.parseInt(MapDate.get("assignmentId")), (long) Integer.parseInt(MapDate.get("userId")), Integer.parseInt(MapDate.get("version")));
         try{
 
             message = "uploaded file successfully";
