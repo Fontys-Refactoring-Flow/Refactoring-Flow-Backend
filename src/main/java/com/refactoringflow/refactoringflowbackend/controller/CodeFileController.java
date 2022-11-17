@@ -36,7 +36,7 @@ public class CodeFileController {
     public ResponseEntity<byte[]> getFile(@PathVariable long id){
         CodeFile file = codeFileService.getFile(id);
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "filename: " + file.getName())
+                .header(HttpHeaders.CONTENT_DISPOSITION)
                 .body(file.getData());
     }
 

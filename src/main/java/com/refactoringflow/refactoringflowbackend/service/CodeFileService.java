@@ -44,7 +44,6 @@ public class CodeFileService {
         Optional<Assignment> assignment = assignmentRepository.findById(assignmentId);
         Optional<Student> student = studentService.findById(userId);
         CodeFile codeFile = new CodeFile((version + 1),
-                assignment.orElseThrow().getRefactoringType(),
                 "text/x-java-source",
                 code.getBytes());
         codeFileRepository.save(codeFile);
