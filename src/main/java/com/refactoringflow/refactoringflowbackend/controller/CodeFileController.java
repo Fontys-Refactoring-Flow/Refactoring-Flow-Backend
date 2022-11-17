@@ -1,6 +1,7 @@
 package com.refactoringflow.refactoringflowbackend.controller;
 
 import com.refactoringflow.refactoringflowbackend.ResponseMessage;
+import com.refactoringflow.refactoringflowbackend.exchanges.CodeFileRequest;
 import com.refactoringflow.refactoringflowbackend.model.codefile.CodeFile;
 import com.refactoringflow.refactoringflowbackend.model.user.Student;
 import com.refactoringflow.refactoringflowbackend.service.CodeFileService;
@@ -40,17 +41,11 @@ public class CodeFileController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("userId") Long userId, @RequestParam("assignmentId") Long assignmentId, @RequestParam("code") String code, @RequestParam("version") int version){
-        String message;
-        codeFileService.save(code, assignmentId,userId,version);
-        try{
-
-            message = "uploaded file successfully";
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
-        }
-        catch(Exception e){
-            message = "upload failed";
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
-        }
+    public ResponseEntity<String> uploadFile(@RequestBody CodeFileRequest codeFileRequest){
+        codeFileService.save(codeFileRequest.code,
+                codeFileRequest.assignmentId,
+                codeFileRequest.userId,
+                codeFileRequest.version);
+        return ResponseEntity.ok("File saved successfully");
     }
 }
