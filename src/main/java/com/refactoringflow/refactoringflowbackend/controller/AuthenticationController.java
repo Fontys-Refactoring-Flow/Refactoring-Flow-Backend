@@ -88,8 +88,7 @@ public class AuthenticationController {
                 map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
-        claims.put("userId", user.get().getId().toString());
-        String jwt = jwtProvider.createJwtForClaims(loginRequest.email, claims, authorities,
+        String jwt = jwtProvider.createJwtForClaims(user.get().getId(), claims, authorities,
                 SecurityConfig.AUTHORITIES_CLAIM_NAME);
 
         return new ResponseEntity<>(new LoginResponse(user.get().getId(), user.get().getName(), user.get().getEmail(),
@@ -144,8 +143,7 @@ public class AuthenticationController {
             .map(GrantedAuthority::getAuthority)
             .collect(Collectors.toList());
 
-        claims.put("studentId", user.getId().toString());
-        String jwt = jwtProvider.createJwtForClaims(user.getName(), claims, authorities, SecurityConfig.AUTHORITIES_CLAIM_NAME);
+        String jwt = jwtProvider.createJwtForClaims(user.getId(), claims, authorities, SecurityConfig.AUTHORITIES_CLAIM_NAME);
         return new RefreshTokenDTO(jwt, refreshTokenService.generateRefreshToken(user.getId()).getToken(), "Bearer");
     }
 

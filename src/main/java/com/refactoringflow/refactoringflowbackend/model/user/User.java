@@ -31,11 +31,13 @@ public abstract class User implements UserDetails {
     @Column(name = "password")
     @NonNull
     private String password;
-
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     @NonNull
     private Set<Role> roles;
+    @OneToOne
+    @JoinTable(name = "github_user", joinColumns = @JoinColumn(name = "github_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private GitHub github;
     @Override
     public String getUsername() {
         return name;

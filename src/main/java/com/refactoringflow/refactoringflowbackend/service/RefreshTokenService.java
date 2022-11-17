@@ -6,11 +6,13 @@ import com.refactoringflow.refactoringflowbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class RefreshTokenService {
     @Value("${jwt.refreshToken.expirationInMillis}")
     private Long refreshTokenDurationInMillis;
@@ -38,7 +40,7 @@ public class RefreshTokenService {
      * @return The refresh token
      */
     public RefreshToken generateRefreshToken(Long userId) {
-        refreshTokenRepository.findByUser(userRepository.findById(userId).orElseThrow()).ifPresent(refreshTokenRepository::delete);
+        refreshTokenRepository.deleteRefreshTokensByUser(userRepository.findById(userId).orElseThrow());
         RefreshToken refreshToken = new RefreshToken(
                 userRepository.findById(userId).orElseThrow(),
                 UUID.randomUUID().toString(),
