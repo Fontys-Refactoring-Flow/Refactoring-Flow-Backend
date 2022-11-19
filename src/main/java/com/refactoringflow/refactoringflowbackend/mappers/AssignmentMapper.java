@@ -2,6 +2,7 @@ package com.refactoringflow.refactoringflowbackend.mappers;
 
 import com.refactoringflow.refactoringflowbackend.model.assignment.Assignment;
 import com.refactoringflow.refactoringflowbackend.model.assignment.AssignmentDTO;
+import org.springframework.context.annotation.Bean;
 
 import java.util.ArrayList;
 import java.util.List;
