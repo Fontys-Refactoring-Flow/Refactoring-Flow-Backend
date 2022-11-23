@@ -42,8 +42,15 @@ public class AssignmentController {
         return assignmentService.findAssignmentByStudent(student);
     }
 
-    @PostMapping("/assignment")
-    public Assignment createChallenge(@RequestBody Assignment assignment) {
+    @PostMapping("/add")
+    public Assignment createAssignment(@RequestBody Assignment assignment) {
         return assignmentRepository.save(assignment);
     }
+
+    @PutMapping("/edit")
+    public Assignment editAssignment(@RequestBody Assignment assignment){
+        return assignmentRepository.save(assignment);
+    }
+
+
 }
