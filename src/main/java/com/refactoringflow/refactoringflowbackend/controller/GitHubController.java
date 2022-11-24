@@ -1,17 +1,11 @@
 package com.refactoringflow.refactoringflowbackend.controller;
 
-import com.refactoringflow.refactoringflowbackend.model.user.GitHub;
 import com.refactoringflow.refactoringflowbackend.model.user.User;
 import com.refactoringflow.refactoringflowbackend.service.GitHubService;
 import com.refactoringflow.refactoringflowbackend.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -27,18 +21,14 @@ public class GitHubController {
 
     @PostMapping("/callback")
     public ResponseEntity<String> gitHubCallback(@RequestParam String code) {
-        UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication == null) {
-            return new ResponseEntity<>("No authentication", HttpStatus.UNAUTHORIZED);
+        if(userService.getUserFromToken().isEmpty()) {
+            return new ResponseEntity<>("Not authorized", HttpStatus.UNAUTHORIZED);
         }
 
-        Optional<User> user = userService.findByName(token.getName());
-        if(user.isEmpty()) {
-            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
-        }
 
-        user.get().setGithub(new GitHub(code));
+        User user = userService.getUserFromToken().get();
+        gitHubService.exchangeCode(user, code);
+
         return new ResponseEntity<>("Success", HttpStatus.OK);
     }
 }
