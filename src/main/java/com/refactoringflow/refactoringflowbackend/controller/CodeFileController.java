@@ -44,6 +44,19 @@ public class CodeFileController {
                 .body(file.getData());
     }
 
+    @GetMapping("/template/{assignmentId}")
+    public ResponseEntity<byte[]> getTemplate(@PathVariable long assignmentId){
+        CodeFile file = codeFileService.getTemplate(assignmentId);
+        if(file==null){
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION)
+                    .body("Template not created".getBytes());
+        }
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION)
+                .body(file.getData());
+    }
+
     @PostMapping("/")
     public ResponseEntity<String> uploadFile(@RequestBody CodeFileRequest codeFileRequest){
         CodeFileRequestMapper mapper = new CodeFileRequestMapper();

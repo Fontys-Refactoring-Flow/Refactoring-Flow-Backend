@@ -50,6 +50,17 @@ public class CodeFileService {
         return codeFileRepository.findById(id).orElseThrow();
     }
 
+    public CodeFile getTemplate(long assignmentId){
+        Assignment assignment = assignmentService.findById(assignmentId).orElseThrow();
+        List<AssignmentCodeFileStudent> assignmentCodeFileStudent = assigmentCodeFileStudentRepository.findAssignmentCodeFileStudentByAssignment(assignment);
+        for (AssignmentCodeFileStudent a : assignmentCodeFileStudent){
+            if(a.getCodeFile().getVersion()==0){
+                return a.getCodeFile();
+            }
+        }
+        return null;
+    }
+
     public List<String> createFile(Patch<String> patch, CodeFile oldFile) {
         try {
 
