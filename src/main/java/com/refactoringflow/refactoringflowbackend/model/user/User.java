@@ -36,7 +36,7 @@ public abstract class User implements UserDetails {
     @NonNull
     private Set<Role> roles;
     @OneToOne
-    @JoinTable(name = "github_user", joinColumns = @JoinColumn(name = "github_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @JoinTable(name = "github_user", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "github_id"))
     private GitHub github;
     @Override
     public String getUsername() {
