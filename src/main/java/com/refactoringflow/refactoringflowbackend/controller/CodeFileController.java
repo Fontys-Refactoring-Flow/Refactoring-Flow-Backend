@@ -71,9 +71,6 @@ public class CodeFileController {
         CodeFile codeFile = mapper.toEntity(codeFileRequest);
         CodeFile template = codeFileService.findCodefileByAssignment(codeFileRequest.assignmentId);
         if(template != null) {
-            Patch<String> patch = codeFileService.createPatch(template, codeFile);
-            codeFile.setData(patch.toString().getBytes(StandardCharsets.UTF_8));
-
             codeFileService.save(codeFile,
                     codeFileRequest.assignmentId,
                     codeFileRequest.userId);

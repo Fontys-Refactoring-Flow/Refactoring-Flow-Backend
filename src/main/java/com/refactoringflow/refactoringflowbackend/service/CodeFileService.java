@@ -61,39 +61,6 @@ public class CodeFileService {
         return null;
     }
 
-    public List<String> createFile(Patch<String> patch, CodeFile oldFile) {
-        try {
-
-
-            List oldFileText = new ArrayList<String>();
-            for (String line : new String(oldFile.getData()).split("\\r?\\n")) {
-                oldFileText.add(line);
-            }
-
-            List<String> patchedText = DiffUtils.patch(oldFileText, patch);
-            return patchedText;
-        } catch (Exception exception) {
-            System.out.println(exception);
-            return null;
-        }
-    }
-
-    public Patch<String> createPatch(CodeFile oldFile, CodeFile newFile){
-        List oldFileText = new ArrayList<String>();
-        for(String line : new String(oldFile.getData()).split("\\r?\\n")){
-            oldFileText.add(line);
-        }
-
-        List newFileText = new ArrayList<String>();
-        for(String line : new String(newFile.getData()).split("\\r?\\n")){
-            newFileText.add(line);
-        }
-
-        Patch<String> patch = DiffUtils.diff(oldFileText, newFileText);
-
-        return patch;
-    }
-
     public CodeFile findCodefileByAssignment(long assignmentId){
         List<AssignmentCodeFileStudent> assignmentCodeFileStudents;
         assignmentCodeFileStudents = assigmentCodeFileStudentRepository.findAssignmentCodeFileStudentByAssignment(assignmentService.findById(assignmentId).get());
