@@ -44,6 +44,14 @@ public class CodeFileController {
                 .body(file.getData());
     }
 
+    @GetMapping("/feedback/{id}")
+    public ResponseEntity<String> getFeedbackFromFile(@PathVariable long id){
+        CodeFile file = codeFileService.getFile(id);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION)
+                .body(file.getFeedback());
+    }
+
     @GetMapping("/template/{assignmentId}")
     public ResponseEntity<byte[]> getTemplate(@PathVariable long assignmentId){
         CodeFile file = codeFileService.getTemplate(assignmentId);
