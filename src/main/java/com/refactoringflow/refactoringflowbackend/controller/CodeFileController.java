@@ -44,6 +44,14 @@ public class CodeFileController {
                 .body(file.getData());
     }
 
+    @GetMapping("/feedback/{id}")
+    public ResponseEntity<String> getFeedbackFromFile(@PathVariable long id){
+        CodeFile file = codeFileService.getFile(id);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION)
+                .body(file.getFeedback());
+    }
+
     @GetMapping("/template/{assignmentId}")
     public ResponseEntity<byte[]> getTemplate(@PathVariable long assignmentId){
         CodeFile file = codeFileService.getTemplate(assignmentId);
@@ -63,9 +71,6 @@ public class CodeFileController {
         CodeFile codeFile = mapper.toEntity(codeFileRequest);
         CodeFile template = codeFileService.findCodefileByAssignment(codeFileRequest.assignmentId);
         if(template != null) {
-            Patch<String> patch = codeFileService.createPatch(template, codeFile);
-            codeFile.setData(patch.toString().getBytes(StandardCharsets.UTF_8));
-
             codeFileService.save(codeFile,
                     codeFileRequest.assignmentId,
                     codeFileRequest.userId);

@@ -27,4 +27,5 @@ public class CodeFile {
     @Lob
     @NonNull
     private byte[] data;
+    private String feedback;
 }
