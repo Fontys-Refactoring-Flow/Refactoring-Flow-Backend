@@ -4,16 +4,13 @@ import com.refactoringflow.refactoringflowbackend.exchanges.CodeFileRequest;
 import com.refactoringflow.refactoringflowbackend.mappers.CodeFileRequestMapper;
 import com.refactoringflow.refactoringflowbackend.model.codefile.CodeFile;
 import com.refactoringflow.refactoringflowbackend.model.user.Student;
-import com.refactoringflow.refactoringflowbackend.service.AssignmentService;
 import com.refactoringflow.refactoringflowbackend.service.CodeFileService;
 import com.refactoringflow.refactoringflowbackend.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.github.difflib.patch.Patch;
 
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @RestController
@@ -22,12 +19,13 @@ import java.util.List;
 public class CodeFileController {
     private final CodeFileService codeFileService;
     private final StudentService studentService;
-    private final AssignmentService assignmentService;
+    private final AlgorithmRepository algorithmRepo;
+
     @Autowired
-    public CodeFileController(CodeFileService codeFileService, StudentService studentService, AssignmentService assignmentService) {
+    public CodeFileController(CodeFileService codeFileService, StudentService studentService, AlgorithmRepository algorithmRepository) {
         this.codeFileService = codeFileService;
         this.studentService = studentService;
-        this.assignmentService = assignmentService;
+        this.algorithmRepo = algorithmRepository;
     }
 
     @GetMapping("/get")

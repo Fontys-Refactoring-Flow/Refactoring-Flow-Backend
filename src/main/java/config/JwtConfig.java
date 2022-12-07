@@ -1,4 +1,4 @@
-package com.refactoringflow.refactoringflowbackend.config;
+package config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

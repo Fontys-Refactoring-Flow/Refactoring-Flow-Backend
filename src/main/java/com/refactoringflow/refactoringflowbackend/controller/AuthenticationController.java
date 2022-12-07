@@ -1,6 +1,6 @@
 package com.refactoringflow.refactoringflowbackend.controller;
 
-import com.refactoringflow.refactoringflowbackend.config.SecurityConfig;
+import config.SecurityConfig;
 import com.refactoringflow.refactoringflowbackend.error.exceptions.RefreshTokenException;
 import com.refactoringflow.refactoringflowbackend.exchanges.*;
 import com.refactoringflow.refactoringflowbackend.model.user.*;

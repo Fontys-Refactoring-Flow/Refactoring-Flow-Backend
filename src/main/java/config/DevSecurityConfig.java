@@ -1,4 +1,4 @@
-package com.refactoringflow.refactoringflowbackend.config;
+package config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
