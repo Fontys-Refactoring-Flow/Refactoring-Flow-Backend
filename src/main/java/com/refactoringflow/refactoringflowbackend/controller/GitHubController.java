@@ -27,6 +27,10 @@ public class GitHubController {
 
 
         User user = userService.getUserFromToken().get();
+        if(user.getGithub() != null) {
+            return new ResponseEntity<>("User already has code", HttpStatus.OK);
+        }
+
         gitHubService.exchangeCode(user, code);
 
         return new ResponseEntity<>("Success", HttpStatus.OK);
