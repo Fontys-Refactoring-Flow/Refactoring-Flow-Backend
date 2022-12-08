@@ -35,20 +35,20 @@ public class JwtTokenService {
     }
 
     /**
-     * Generate a new JWT token for the given student.
+     * Generate a new JWT token for the given user.
      *
-     * @param student The student
+     * @param user The student
      * @return The access token
      */
-    public String createJwtForUser(Student student) {
+    public String createJwtForUser(User user) {
         Map<String, String> claims = new HashMap<>();
-        claims.put("userId", student.getId().toString());
-        List<String> authorities = student.getAuthorities()
+        claims.put("userId", user.getId().toString());
+        List<String> authorities = user.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
-        return createJwtForClaims(student.getId(), claims, authorities, SecurityConfig.AUTHORITIES_CLAIM_NAME);
+        return createJwtForClaims(user.getId(), claims, authorities, SecurityConfig.AUTHORITIES_CLAIM_NAME);
     }
 
     /**

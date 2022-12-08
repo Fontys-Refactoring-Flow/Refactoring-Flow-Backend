@@ -121,6 +121,25 @@ public class AuthenticationController {
                 new HashSet<>(roles)), HttpStatus.OK);
     }
 
+    @PostMapping(value = "/teacher/register", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public ResponseEntity<?> registerTeacher(RegisterTeacherRequest registerStudentRequest) {
+        List<Role> roles = new ArrayList<>();
+        roles.add(roleService.findByName("TEACHER"));
+
+        if(userService.findByName(registerStudentRequest.name).isPresent() ||
+                userService.findByEmail(registerStudentRequest.email).isPresent())
+            return new ResponseEntity<>(
+                    new ErrorResponse(HttpStatus.UNAUTHORIZED, "Teacher with that name/email already exists"),
+                    HttpStatus.UNAUTHORIZED);
+
+        return new ResponseEntity<>(registerTeacher(
+                registerStudentRequest.name,
+                registerStudentRequest.email,
+                registerStudentRequest.password,
+                registerStudentRequest.profile,
+                new HashSet<>(roles)), HttpStatus.OK);
+    }
+
     /**
      * Refresh a student's JWT token using a refresh token.
      * @param refreshRequest The refresh request
@@ -209,5 +228,20 @@ public class AuthenticationController {
         return new LoginResponse(student.getId(), name, email,
                 student.getAuthorities().stream().map(GrantedAuthority::getAuthority).toArray(String[]::new), jwt,
                 refreshTokenService.generateRefreshToken(student.getId()).getToken(), "Bearer");
+    }
+
+    private LoginResponse registerTeacher(String name, String email, String password, String profile, HashSet<Role> roles) {
+        Teacher teacher = new Teacher(name,
+                email,
+                passwordEncoder.encode(password),
+                profile,
+                roles);
+
+        userService.save(teacher);
+
+        String jwt = jwtProvider.createJwtForUser(teacher);
+        return new LoginResponse(teacher.getId(), name, email,
+                teacher.getAuthorities().stream().map(GrantedAuthority::getAuthority).toArray(String[]::new), jwt,
+                refreshTokenService.generateRefreshToken(teacher.getId()).getToken(), "Bearer");
     }
 }
