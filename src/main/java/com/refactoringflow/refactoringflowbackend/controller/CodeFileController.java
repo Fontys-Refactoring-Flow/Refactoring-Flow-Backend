@@ -69,17 +69,11 @@ public class CodeFileController {
     public ResponseEntity<String> uploadFile(@RequestBody CodeFileRequest codeFileRequest){
         CodeFileRequestMapper mapper = new CodeFileRequestMapper();
         CodeFile codeFile = mapper.toEntity(codeFileRequest);
-        CodeFile template = codeFileService.findCodefileByAssignment(codeFileRequest.assignmentId);
-        if(template != null) {
-            codeFileService.save(codeFile,
-                    codeFileRequest.assignmentId,
-                    codeFileRequest.userId);
-            return ResponseEntity.ok("File saved successfully");
-        }else {
-            codeFileService.save(codeFile,
-                    codeFileRequest.assignmentId,
-                    codeFileRequest.userId);
-            return ResponseEntity.ok("File saved successfully");
-        }
+        System.out.println(codeFile.getVersion());
+        codeFileService.save(codeFile,
+           codeFileRequest.assignmentId,
+           codeFileRequest.userId);
+        return ResponseEntity.ok("File saved successfully");
+
     }
 }
