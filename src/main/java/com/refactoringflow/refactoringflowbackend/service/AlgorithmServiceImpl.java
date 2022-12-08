@@ -8,8 +8,8 @@ public class AlgorithmServiceImpl implements AlgorithmService{
 
     private final DummyAlgorithm dummyAlgorithm;
 
-    public AlgorithmServiceImpl(DummyAlgorithm dummy){
-        this.dummyAlgorithm = dummy;
+    public AlgorithmServiceImpl(DummyAlgorithm dummyAlgorithm){
+        this.dummyAlgorithm = dummyAlgorithm;
     }
 
     @Override

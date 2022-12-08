@@ -1,4 +1,4 @@
-package config;
+package com.refactoringflow.refactoringflowbackend.config;
 
 import com.refactoringflow.refactoringflowbackend.error.RestAccessDeniedHandler;
 import com.refactoringflow.refactoringflowbackend.error.RestForbiddenEntryPoint;

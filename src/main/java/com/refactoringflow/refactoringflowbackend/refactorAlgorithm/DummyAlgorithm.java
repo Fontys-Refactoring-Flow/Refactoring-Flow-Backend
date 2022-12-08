@@ -1,5 +1,8 @@
 package com.refactoringflow.refactoringflowbackend.refactorAlgorithm;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public class DummyAlgorithm {
     public String API_Rename( ){
         return  "Below are INSTRUCTIONS for renaming int MethodXYZ() in class MyMethod of your project, assuming all risks are taken into account.\n" +
