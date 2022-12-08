@@ -2,8 +2,10 @@ package com.refactoringflow.refactoringflowbackend.controller;
 
 import com.refactoringflow.refactoringflowbackend.exchanges.CodeFileRequest;
 import com.refactoringflow.refactoringflowbackend.mappers.CodeFileRequestMapper;
+import com.refactoringflow.refactoringflowbackend.model.RefactorType;
 import com.refactoringflow.refactoringflowbackend.model.codefile.CodeFile;
 import com.refactoringflow.refactoringflowbackend.model.user.Student;
+import com.refactoringflow.refactoringflowbackend.repository.CodeFileRepository;
 import com.refactoringflow.refactoringflowbackend.service.AlgorithmService;
 import com.refactoringflow.refactoringflowbackend.service.CodeFileService;
 import com.refactoringflow.refactoringflowbackend.service.StudentService;
@@ -21,12 +23,15 @@ public class CodeFileController {
     private final CodeFileService codeFileService;
     private final StudentService studentService;
     private final AlgorithmService algorithmService;
+    private final CodeFileRepository codeFileRepository;
 
     @Autowired
-    public CodeFileController(CodeFileService codeFileService, StudentService studentService, AlgorithmService algorithmService) {
+    public CodeFileController(CodeFileService codeFileService, StudentService studentService, AlgorithmService algorithmService,
+                              CodeFileRepository codeFileRepository) {
         this.codeFileService = codeFileService;
         this.studentService = studentService;
         this.algorithmService = algorithmService;
+        this.codeFileRepository = codeFileRepository;
     }
 
     @GetMapping("/get")
@@ -64,12 +69,16 @@ public class CodeFileController {
                 .body(file.getData());
     }
 
-    @PostMapping("/")
-    public ResponseEntity<String> uploadFile(@RequestBody CodeFileRequest codeFileRequest){
+    @PostMapping("/{refactor_type}")
+    public ResponseEntity<String> uploadFile(@RequestBody CodeFileRequest codeFileRequest, @RequestParam RefactorType refactorType){
         CodeFileRequestMapper mapper = new CodeFileRequestMapper();
         CodeFile codeFile = mapper.toEntity(codeFileRequest);
         CodeFile template = codeFileService.findCodefileByAssignment(codeFileRequest.assignmentId);
-        codeFile.setFeedback(algorithmService.RenameMethod());
+        switch (refactorType ){
+            case Rename_Method -> codeFile.setFeedback(algorithmService.RenameMethod());
+            case API_Rename -> codeFile.setFeedback(algorithmService.API_Rename());
+            case Extract_Method -> codeFile.setFeedback(algorithmService.ExtractMethod());
+        }
         if(template != null) {
             codeFileService.save(codeFile,
                     codeFileRequest.assignmentId,
