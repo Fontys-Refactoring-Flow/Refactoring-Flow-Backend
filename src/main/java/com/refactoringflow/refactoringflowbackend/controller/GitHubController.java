@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/api/v1/github")
@@ -34,5 +36,14 @@ public class GitHubController {
         gitHubService.exchangeCode(user, code);
 
         return new ResponseEntity<>("Success", HttpStatus.OK);
+    }
+
+    @GetMapping("/list")
+    public List<String> listRepo() {
+        if(userService.getUserFromToken().isEmpty()) {
+            return null;
+        }
+
+        return gitHubService.getUserRepositories(userService.getUserFromToken().get().getId());
     }
 }
