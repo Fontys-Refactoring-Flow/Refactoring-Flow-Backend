@@ -4,6 +4,7 @@ import com.refactoringflow.refactoringflowbackend.exchanges.CodeFileRequest;
 import com.refactoringflow.refactoringflowbackend.mappers.CodeFileRequestMapper;
 import com.refactoringflow.refactoringflowbackend.model.codefile.CodeFile;
 import com.refactoringflow.refactoringflowbackend.model.user.Student;
+import com.refactoringflow.refactoringflowbackend.service.AlgorithmService;
 import com.refactoringflow.refactoringflowbackend.service.CodeFileService;
 import com.refactoringflow.refactoringflowbackend.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +20,13 @@ import java.util.List;
 public class CodeFileController {
     private final CodeFileService codeFileService;
     private final StudentService studentService;
-    private final AlgorithmRepository algorithmRepo;
+    private final AlgorithmService algorithmService;
 
     @Autowired
-    public CodeFileController(CodeFileService codeFileService, StudentService studentService, AlgorithmRepository algorithmRepository) {
+    public CodeFileController(CodeFileService codeFileService, StudentService studentService, AlgorithmService algorithmService) {
         this.codeFileService = codeFileService;
         this.studentService = studentService;
-        this.algorithmRepo = algorithmRepository;
+        this.algorithmService = algorithmService;
     }
 
     @GetMapping("/get")
@@ -68,6 +69,7 @@ public class CodeFileController {
         CodeFileRequestMapper mapper = new CodeFileRequestMapper();
         CodeFile codeFile = mapper.toEntity(codeFileRequest);
         CodeFile template = codeFileService.findCodefileByAssignment(codeFileRequest.assignmentId);
+        codeFile.setFeedback(algorithmService.RenameMethod());
         if(template != null) {
             codeFileService.save(codeFile,
                     codeFileRequest.assignmentId,

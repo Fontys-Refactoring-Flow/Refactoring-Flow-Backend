@@ -1,7 +1,9 @@
 package com.refactoringflow.refactoringflowbackend.service;
 
 import com.refactoringflow.refactoringflowbackend.refactorAlgorithm.DummyAlgorithm;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AlgorithmServiceImpl implements AlgorithmService{
 
     private final DummyAlgorithm dummyAlgorithm;
