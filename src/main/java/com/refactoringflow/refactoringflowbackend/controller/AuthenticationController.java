@@ -122,21 +122,21 @@ public class AuthenticationController {
     }
 
     @PostMapping(value = "/teacher/register", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ResponseEntity<?> registerTeacher(RegisterTeacherRequest registerStudentRequest) {
+    public ResponseEntity<?> registerTeacher(RegisterTeacherRequest registerTeacherRequest) {
         List<Role> roles = new ArrayList<>();
         roles.add(roleService.findByName("TEACHER"));
 
-        if(userService.findByName(registerStudentRequest.name).isPresent() ||
-                userService.findByEmail(registerStudentRequest.email).isPresent())
+        if(userService.findByName(registerTeacherRequest.name).isPresent() ||
+                userService.findByEmail(registerTeacherRequest.email).isPresent())
             return new ResponseEntity<>(
                     new ErrorResponse(HttpStatus.UNAUTHORIZED, "Teacher with that name/email already exists"),
                     HttpStatus.UNAUTHORIZED);
 
         return new ResponseEntity<>(registerTeacher(
-                registerStudentRequest.name,
-                registerStudentRequest.email,
-                registerStudentRequest.password,
-                registerStudentRequest.profile,
+                registerTeacherRequest.name,
+                registerTeacherRequest.email,
+                registerTeacherRequest.password,
+                registerTeacherRequest.profile,
                 new HashSet<>(roles)), HttpStatus.OK);
     }
 
