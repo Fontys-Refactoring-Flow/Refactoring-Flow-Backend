@@ -2,18 +2,18 @@ package com.refactoringflow.refactoringflowbackend.controller;
 
 import com.refactoringflow.refactoringflowbackend.exchanges.CodeFileRequest;
 import com.refactoringflow.refactoringflowbackend.mappers.CodeFileRequestMapper;
-import com.refactoringflow.refactoringflowbackend.model.RefactorType;
 import com.refactoringflow.refactoringflowbackend.model.codefile.CodeFile;
 import com.refactoringflow.refactoringflowbackend.model.user.Student;
-import com.refactoringflow.refactoringflowbackend.repository.CodeFileRepository;
-import com.refactoringflow.refactoringflowbackend.service.AlgorithmService;
+import com.refactoringflow.refactoringflowbackend.service.AssignmentService;
 import com.refactoringflow.refactoringflowbackend.service.CodeFileService;
 import com.refactoringflow.refactoringflowbackend.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.github.difflib.patch.Patch;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @RestController
@@ -22,16 +22,12 @@ import java.util.List;
 public class CodeFileController {
     private final CodeFileService codeFileService;
     private final StudentService studentService;
-    private final AlgorithmService algorithmService;
-    private final CodeFileRepository codeFileRepository;
-
+    private final AssignmentService assignmentService;
     @Autowired
-    public CodeFileController(CodeFileService codeFileService, StudentService studentService, AlgorithmService algorithmService,
-                              CodeFileRepository codeFileRepository) {
+    public CodeFileController(CodeFileService codeFileService, StudentService studentService, AssignmentService assignmentService) {
         this.codeFileService = codeFileService;
         this.studentService = studentService;
-        this.algorithmService = algorithmService;
-        this.codeFileRepository = codeFileRepository;
+        this.assignmentService = assignmentService;
     }
 
     @GetMapping("/get")
@@ -69,26 +65,15 @@ public class CodeFileController {
                 .body(file.getData());
     }
 
-    @PostMapping("/{refactor_type}")
-    public ResponseEntity<String> uploadFile(@RequestBody CodeFileRequest codeFileRequest, @RequestParam RefactorType refactorType){
+    @PostMapping("/")
+    public ResponseEntity<String> uploadFile(@RequestBody CodeFileRequest codeFileRequest){
         CodeFileRequestMapper mapper = new CodeFileRequestMapper();
         CodeFile codeFile = mapper.toEntity(codeFileRequest);
-        CodeFile template = codeFileService.findCodefileByAssignment(codeFileRequest.assignmentId);
-        switch (refactorType ){
-            case Rename_Method -> codeFile.setFeedback(algorithmService.RenameMethod());
-            case API_Rename -> codeFile.setFeedback(algorithmService.API_Rename());
-            case Extract_Method -> codeFile.setFeedback(algorithmService.ExtractMethod());
-        }
-        if(template != null) {
-            codeFileService.save(codeFile,
-                    codeFileRequest.assignmentId,
-                    codeFileRequest.userId);
-            return ResponseEntity.ok("File saved successfully");
-        }else {
-            codeFileService.save(codeFile,
-                    codeFileRequest.assignmentId,
-                    codeFileRequest.userId);
-            return ResponseEntity.ok("File saved successfully");
-        }
+        System.out.println(codeFile.getVersion());
+        codeFileService.save(codeFile,
+           codeFileRequest.assignmentId,
+           codeFileRequest.userId);
+        return ResponseEntity.ok("File saved successfully");
+
     }
 }

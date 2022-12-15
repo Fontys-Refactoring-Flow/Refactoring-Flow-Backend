@@ -4,7 +4,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.refactoringflow.refactoringflowbackend.error.exceptions.ExpiredJwtException;
 import com.refactoringflow.refactoringflowbackend.exchanges.ErrorResponse;
-import com.refactoringflow.refactoringflowbackend.model.user.Student;
+import com.refactoringflow.refactoringflowbackend.model.user.User;
 import com.refactoringflow.refactoringflowbackend.service.JwtTokenService;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
@@ -64,8 +64,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     }
 
     private Authentication getAuthentication(String authToken) {
-        Student student = jwtTokenService.getUserFromToken(authToken);
-        return new UsernamePasswordAuthenticationToken(student.getName(), null, student.getAuthorities());
+        User user = jwtTokenService.getUserFromToken(authToken);
+        return new UsernamePasswordAuthenticationToken(user.getName(), null, user.getAuthorities());
     }
 
     private String extractJwtFromRequest(HttpServletRequest request) {
