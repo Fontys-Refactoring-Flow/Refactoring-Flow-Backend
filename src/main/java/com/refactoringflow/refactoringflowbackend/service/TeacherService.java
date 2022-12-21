@@ -1,7 +1,7 @@
 package com.refactoringflow.refactoringflowbackend.service;
 
 import com.refactoringflow.refactoringflowbackend.repository.TeacherRepository;
-import com.refactoringflow.refactoringflowbackend.model.Teacher;
+import com.refactoringflow.refactoringflowbackend.model.user.Teacher;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

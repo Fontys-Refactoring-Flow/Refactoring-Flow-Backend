@@ -1,6 +1,6 @@
 package com.refactoringflow.refactoringflowbackend.controller;
 
-import com.refactoringflow.refactoringflowbackend.model.Teacher;
+import com.refactoringflow.refactoringflowbackend.model.user.Teacher;
 import com.refactoringflow.refactoringflowbackend.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

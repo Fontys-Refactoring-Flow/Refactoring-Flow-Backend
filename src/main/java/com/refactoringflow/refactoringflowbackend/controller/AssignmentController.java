@@ -1,8 +1,8 @@
 package com.refactoringflow.refactoringflowbackend.controller;
 
-import com.refactoringflow.refactoringflowbackend.exception.ResourceNotFoundException;
-import com.refactoringflow.refactoringflowbackend.model.Assignment;
-import com.refactoringflow.refactoringflowbackend.model.Student;
+import com.refactoringflow.refactoringflowbackend.error.exceptions.ResourceNotFoundException;
+import com.refactoringflow.refactoringflowbackend.model.assignment.Assignment;
+import com.refactoringflow.refactoringflowbackend.model.user.Student;
 import com.refactoringflow.refactoringflowbackend.repository.AssignmentRepository;
 import com.refactoringflow.refactoringflowbackend.service.AssignmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +39,18 @@ public class AssignmentController {
     List<Assignment> findAssignmentsByStudentId(@PathVariable Long studentId) {
         Student student = new Student();
         student.setId(studentId);
-        return assignmentService.findChallengeByStudent(student);
+        return assignmentService.findAssignmentByStudent(student);
     }
 
-    @PostMapping("/assignment")
-    public Assignment createChallenge(@RequestBody Assignment assignment) {
+    @PostMapping("/add")
+    public Assignment createAssignment(@RequestBody Assignment assignment) {
         return assignmentRepository.save(assignment);
     }
+
+    @PutMapping("/edit")
+    public Assignment editAssignment(@RequestBody Assignment assignment){
+        return assignmentRepository.save(assignment);
+    }
+
+
 }

@@ -1,6 +1,6 @@
 package com.refactoringflow.refactoringflowbackend.repository;
 
-import com.refactoringflow.refactoringflowbackend.model.Teacher;
+import com.refactoringflow.refactoringflowbackend.model.user.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
