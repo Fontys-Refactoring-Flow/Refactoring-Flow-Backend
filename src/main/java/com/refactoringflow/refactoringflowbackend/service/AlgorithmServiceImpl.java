@@ -38,8 +38,8 @@ public class AlgorithmServiceImpl implements AlgorithmService {
     public List<Step> generateSteps(CodeFile codeFile) {
         List<Step> steps = new ArrayList<>();
         steps.add(new Step(1, "Step 1", "Description 1"));
-        steps.add(new Step(1, "Step 2", "Description 2"));
-        steps.add(new Step(1, "Step 3", "Description 3"));
+        steps.add(new Step(2, "Step 2", "Description 2"));
+        steps.add(new Step(3, "Step 3", "Description 3"));
 
         if(!codeFile.getSteps().isEmpty()) {
             stepRepository.deleteAll(codeFile.getSteps());
