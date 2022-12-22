@@ -1,18 +1,15 @@
 package com.refactoringflow.refactoringflowbackend.service;
 
-import com.github.difflib.DiffUtils;
-import com.github.difflib.patch.Patch;
 import com.refactoringflow.refactoringflowbackend.model.AssignmentCodeFileStudent;
 import com.refactoringflow.refactoringflowbackend.model.assignment.Assignment;
 import com.refactoringflow.refactoringflowbackend.model.codefile.CodeFile;
+import com.refactoringflow.refactoringflowbackend.model.codefile.StepDTO;
 import com.refactoringflow.refactoringflowbackend.model.user.Student;
 import com.refactoringflow.refactoringflowbackend.repository.AssigmentCodeFileStudentRepository;
-import com.refactoringflow.refactoringflowbackend.repository.AssignmentRepository;
 import com.refactoringflow.refactoringflowbackend.repository.CodeFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,16 +20,19 @@ public class CodeFileService {
     private final AssignmentService assignmentService;
     private final AssigmentCodeFileStudentRepository assigmentCodeFileStudentRepository;
     private final StudentService studentService;
+    private final AlgorithmService algorithmService;
 
     @Autowired
     public CodeFileService(CodeFileRepository codeFileRepository,
                            AssignmentService assignmentService,
                            AssigmentCodeFileStudentRepository assigmentCodeFileStudentRepository,
-                           StudentService studentService) {
+                           StudentService studentService,
+                           AlgorithmServiceImpl algorithmService) {
         this.codeFileRepository = codeFileRepository;
         this.assignmentService = assignmentService;
         this.assigmentCodeFileStudentRepository = assigmentCodeFileStudentRepository;
         this.studentService = studentService;
+        this.algorithmService = algorithmService;
     }
 
     public void save(CodeFile codeFile, Long assignmentId, Long userId) {
@@ -70,5 +70,11 @@ public class CodeFileService {
            }
        }
        return null;
+    }
+
+    public List<StepDTO> getSteps(CodeFile codeFile) {
+        return algorithmService.generateSteps(codeFile).stream().map(
+                (step) -> new StepDTO(step.getId(), step.getStepIndex(), step.getCodeFile().getId(),
+                        step.getTitle(), step.getDescription())).toList();
     }
 }

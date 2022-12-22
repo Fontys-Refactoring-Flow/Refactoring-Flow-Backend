@@ -2,7 +2,7 @@ package com.refactoringflow.refactoringflowbackend.controller;
 
 import com.refactoringflow.refactoringflowbackend.exchanges.CodeFileRequest;
 import com.refactoringflow.refactoringflowbackend.mappers.CodeFileRequestMapper;
-import com.refactoringflow.refactoringflowbackend.model.RefactorType;
+import com.refactoringflow.refactoringflowbackend.model.assignment.Assignment;
 import com.refactoringflow.refactoringflowbackend.model.codefile.CodeFile;
 import com.refactoringflow.refactoringflowbackend.model.user.Student;
 import com.refactoringflow.refactoringflowbackend.service.AlgorithmService;
@@ -13,10 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.github.difflib.patch.Patch;
 
-import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -25,11 +24,15 @@ public class CodeFileController {
     private final CodeFileService codeFileService;
     private final StudentService studentService;
     private final AlgorithmService algorithmService;
+    private final AssignmentService assignmentService;
+
     @Autowired
-    public CodeFileController(CodeFileService codeFileService, StudentService studentService, AlgorithmService algorithmService) {
+    public CodeFileController(CodeFileService codeFileService, StudentService studentService, AlgorithmService algorithmService,
+                              AssignmentService assignmentService) {
         this.codeFileService = codeFileService;
         this.studentService = studentService;
         this.algorithmService = algorithmService;
+        this.assignmentService = assignmentService;
     }
 
     @GetMapping("/get")
@@ -67,15 +70,20 @@ public class CodeFileController {
                 .body(file.getData());
     }
 
-    @PostMapping("/{refactor_type}")
-    public ResponseEntity<String> uploadFile(@RequestBody CodeFileRequest codeFileRequest, @RequestParam RefactorType refactorType){
+    @PostMapping("/")
+    public ResponseEntity<String> uploadFile(@RequestBody CodeFileRequest codeFileRequest){
         CodeFileRequestMapper mapper = new CodeFileRequestMapper();
         CodeFile codeFile = mapper.toEntity(codeFileRequest);
-        System.out.println(codeFile.getVersion());
-        switch (refactorType ){
-            case Rename_Method -> codeFile.setFeedback(algorithmService.RenameMethod());
-            case API_Rename -> codeFile.setFeedback(algorithmService.API_Rename());
-            case Extract_Method -> codeFile.setFeedback(algorithmService.ExtractMethod());
+        Optional<Assignment> assignment = assignmentService.findById(codeFileRequest.assignmentId);
+
+        if(assignment.isEmpty()) {
+            return ResponseEntity.badRequest().body("Assigment not found");
+        }
+
+        switch (assignment.get().getRefactoringType()){
+            case "Rename_Method" -> codeFile.setFeedback(algorithmService.RenameMethod());
+            case "API_Rename" -> codeFile.setFeedback(algorithmService.API_Rename());
+            case "Extract_Method" -> codeFile.setFeedback(algorithmService.ExtractMethod());
         }
         codeFileService.save(codeFile,
            codeFileRequest.assignmentId,

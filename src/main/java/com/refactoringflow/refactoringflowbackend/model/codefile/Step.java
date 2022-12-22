@@ -4,7 +4,6 @@ import lombok.*;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Getter
 @Setter
@@ -12,21 +11,18 @@ import java.util.List;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
-@Table(name = "code_file")
-public class CodeFile {
-
+@Table(name = "step")
+public class Step {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @NonNull
-    private int version;
+    private Integer stepIndex;
+    @ManyToOne
     @NonNull
-    private String type;
-    @Lob
+    private CodeFile codeFile;
     @NonNull
-    private byte[] data;
-    private String feedback;
-    @OneToMany(mappedBy = "codeFile", cascade = CascadeType.ALL)
-    private List<Step> steps;
+    private String title;
+    @NonNull
+    private String description;
 }
