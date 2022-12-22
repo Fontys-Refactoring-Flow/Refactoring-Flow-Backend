@@ -27,6 +27,6 @@ public class CodeFile {
     @NonNull
     private byte[] data;
     private String feedback;
-    @OneToMany(mappedBy = "codeFile", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
     private List<Step> steps;
 }

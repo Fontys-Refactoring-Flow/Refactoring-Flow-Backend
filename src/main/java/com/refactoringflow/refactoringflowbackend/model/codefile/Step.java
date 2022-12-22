@@ -18,9 +18,6 @@ public class Step {
     private Long id;
     @NonNull
     private Integer stepIndex;
-    @ManyToOne
-    @NonNull
-    private CodeFile codeFile;
     @NonNull
     private String title;
     @NonNull

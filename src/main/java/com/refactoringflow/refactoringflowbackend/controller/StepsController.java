@@ -17,6 +17,6 @@ public class StepsController {
     }
     @PostMapping(value = "/{codeFileId}/")
     public List<StepDTO> getSteps(@PathVariable Long codeFileId) {
-        return codeFileService.getSteps(codeFileService.getFile(codeFileId));
+        return codeFileService.getSteps(codeFileId);
     }
 }

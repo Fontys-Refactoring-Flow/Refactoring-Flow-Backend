@@ -3,6 +3,7 @@ package com.refactoringflow.refactoringflowbackend.service;
 import com.refactoringflow.refactoringflowbackend.model.AssignmentCodeFileStudent;
 import com.refactoringflow.refactoringflowbackend.model.assignment.Assignment;
 import com.refactoringflow.refactoringflowbackend.model.codefile.CodeFile;
+import com.refactoringflow.refactoringflowbackend.model.codefile.Step;
 import com.refactoringflow.refactoringflowbackend.model.codefile.StepDTO;
 import com.refactoringflow.refactoringflowbackend.model.user.Student;
 import com.refactoringflow.refactoringflowbackend.repository.AssigmentCodeFileStudentRepository;
@@ -72,9 +73,11 @@ public class CodeFileService {
        return null;
     }
 
-    public List<StepDTO> getSteps(CodeFile codeFile) {
-        return algorithmService.generateSteps(codeFile).stream().map(
-                (step) -> new StepDTO(step.getId(), step.getStepIndex(), step.getCodeFile().getId(),
+    public List<StepDTO> getSteps(Long id) {
+        CodeFile codeFile = codeFileRepository.findById(id).orElseThrow();
+        List<Step> steps = algorithmService.generateSteps(codeFile);
+        return steps.stream().map(
+                (step) -> new StepDTO(step.getId(), step.getStepIndex(), id,
                         step.getTitle(), step.getDescription())).toList();
     }
 }
