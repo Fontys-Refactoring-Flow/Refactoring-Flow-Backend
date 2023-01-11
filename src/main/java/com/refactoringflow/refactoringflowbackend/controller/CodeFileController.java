@@ -6,16 +6,13 @@ import com.refactoringflow.refactoringflowbackend.model.RefactorType;
 import com.refactoringflow.refactoringflowbackend.model.codefile.CodeFile;
 import com.refactoringflow.refactoringflowbackend.model.user.Student;
 import com.refactoringflow.refactoringflowbackend.service.AlgorithmService;
-import com.refactoringflow.refactoringflowbackend.service.AssignmentService;
 import com.refactoringflow.refactoringflowbackend.service.CodeFileService;
 import com.refactoringflow.refactoringflowbackend.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.github.difflib.patch.Patch;
 
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @RestController
@@ -67,7 +64,7 @@ public class CodeFileController {
                 .body(file.getData());
     }
 
-    @PostMapping("/{refactor_type}")
+    @PostMapping
     public ResponseEntity<String> uploadFile(@RequestBody CodeFileRequest codeFileRequest, @RequestParam RefactorType refactorType){
         CodeFileRequestMapper mapper = new CodeFileRequestMapper();
         CodeFile codeFile = mapper.toEntity(codeFileRequest);
