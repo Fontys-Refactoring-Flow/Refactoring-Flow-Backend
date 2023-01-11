@@ -1,4 +1,6 @@
 @echo off
 echo Java keystore genereren...
-keytool -keystore keystore2.jks -genkey -keyalg RSA -alias dev
-move keystore2.jks src\main\resources\keys\
+keytool -keystore keystore.jks -genkey -keyalg RSA -alias dev
+echo Java keystore verplaatsen...
+move keystore.jks ./src/main/resources/keys/
+echo Java keystore klaar, je kunt nu de applicatie starten.
