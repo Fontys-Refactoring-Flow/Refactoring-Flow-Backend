@@ -80,6 +80,10 @@ _Below is an instruction on how to install the project for it's first time run._
    ```
 2. Edit database settings in application.properties file to use your own
 database.
+4. Run install script to generate a keystore file (for JWT validation)
+   ```sh
+   ./install.sh
+   ```
 3. Package the project
    ```sh
    mvnw package
@@ -88,18 +92,18 @@ database.
    ```sh
    java -jar target/Refactoring-Flow-Backend-0.0.1-SNAPSHOT.jar 
    ```
-5. Add a directory called 'Keys' int src/main/resources and add generated keystore file. You can read how to generate this file [here](https://docs.oracle.com/cd/E19509-01/820-3503/ggfen/index.html)
-
-6. Change active profiles to 'dev' in the build configuration
+6. Change active profiles to 'dev' in the build configuration or as a command line argument
+   using ``--spring.profiles.active=dev``, this bypasses the login page and allows login using
+   empty fields.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Implement JWT tokens
+- [x] Implement JWT tokens
+- [x] Give teacher ability to look at submitted assignments
 - [ ] Import code from Git repository
-- [ ] Give teacher ability to give feedback to students
 - [ ] Make the student be able to see the feedback given by the teacher. 
 
 See the [open issues](https://github.com/Fontys-Refactoring-Flow/Refactoring-Flow-Backend/issues) for a full list of proposed features (and known issues).
