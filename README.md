@@ -78,17 +78,17 @@ _Below is an instruction on how to install the project for it's first time run._
    ```sh
    git clone https://github.com/Fontys-Refactoring-Flow/Refactoring-Flow-Backend.git
    ```
-2. Edit database settings in application.properties file to use your own
-database.
-4. Run install script to generate a keystore file (for JWT validation)
+2. Create your own application.properties file in the ``src/main/resources`` folder. An overview of all necessary
+   properties can be found in the ``application.properties.example`` file.
+3. Run install script to generate a keystore file (for JWT validation)
    ```sh
    ./install.sh
    ```
-3. Package the project
+4. Package the project
    ```sh
    mvnw package
    ```
-4. Run packaged jar file
+5. Run packaged jar file
    ```sh
    java -jar target/Refactoring-Flow-Backend-0.0.1-SNAPSHOT.jar 
    ```
