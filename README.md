@@ -67,8 +67,8 @@ In this section we will discuss the steps which need to be made in order to run 
 ### Prerequisites
 
 _This  list shows the prerequisites needed to run the project._
-* java 17/18
-* mysql
+* [java 17/18](https://adoptium.net/download/)
+* [mysql](https://dev.mysql.com/downloads/mysql/)
 
 ### Installation
 
@@ -88,11 +88,15 @@ _Below is an instruction on how to install the project for it's first time run._
    ```sh
    mvnw package
    ```
-5. Run packaged jar file
+5. Import db.sql file (from Teams) into your own database
+   ```sh
+   mysql -u username -p database_name < db.sql
+   ```
+6. Run packaged jar file
    ```sh
    java -jar target/Refactoring-Flow-Backend-0.0.1-SNAPSHOT.jar 
    ```
-6. Change active profiles to 'dev' in the build configuration or as a command line argument
+7. Change active profiles to 'dev' in the build configuration or as a command line argument
    using ``--spring.profiles.active=dev``, this bypasses the login page and allows login using
    empty fields.
 
