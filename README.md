@@ -67,7 +67,7 @@ In this section we will discuss the steps which need to be made in order to run 
 ### Prerequisites
 
 _This  list shows the prerequisites needed to run the project._
-* [java 17/18](https://adoptium.net/download/)
+* [java 17/18](https://adoptium.net/temurin/releases/?version=18)
 * [mysql](https://dev.mysql.com/downloads/mysql/)
 
 ### Installation
