@@ -78,16 +78,23 @@ _Below is an instruction on how to install the project for it's first time run._
    ```sh
    git clone https://github.com/Fontys-Refactoring-Flow/Refactoring-Flow-Backend.git
    ```
-2. Edit database settings in application.properties file to use your own
-database.
-3. Package the project
+2. Create your own application.properties file in the ``src/main/resources`` folder. An overview of all necessary
+   properties can be found in the ``application.properties.example`` file.
+3. Run install script to generate a keystore file (for JWT validation)
+   ```sh
+   install.bat
+   ```
+4. Package the project
    ```sh
    mvnw package
    ```
-4. Run packaged jar file
+5. Run packaged jar file
    ```sh
    java -jar target/Refactoring-Flow-Backend-0.0.1-SNAPSHOT.jar 
    ```
+6. Change active profiles to 'dev' in the build configuration or as a command line argument
+   using ``--spring.profiles.active=dev``, this bypasses the login page and allows login using
+   empty fields.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -95,8 +102,8 @@ database.
 ## Roadmap
 
 - [x] Implement JWT tokens
+- [x] Give teacher ability to look at submitted assignments
 - [ ] Import code from Git repository
-- [ ] Give teacher ability to give feedback to students
 - [ ] Make the student be able to see the feedback given by the teacher. 
 
 See the [open issues](https://github.com/Fontys-Refactoring-Flow/Refactoring-Flow-Backend/issues) for a full list of proposed features (and known issues).

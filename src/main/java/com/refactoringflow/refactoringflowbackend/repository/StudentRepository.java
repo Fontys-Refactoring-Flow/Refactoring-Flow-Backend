@@ -1,6 +1,6 @@
 package com.refactoringflow.refactoringflowbackend.repository;
 
-import com.refactoringflow.refactoringflowbackend.model.Student;
+import com.refactoringflow.refactoringflowbackend.model.user.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

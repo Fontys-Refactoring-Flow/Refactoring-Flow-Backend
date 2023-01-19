@@ -1,7 +1,7 @@
 package com.refactoringflow.refactoringflowbackend.repository;
 
-import com.refactoringflow.refactoringflowbackend.model.RefreshToken;
-import com.refactoringflow.refactoringflowbackend.model.User;
+import com.refactoringflow.refactoringflowbackend.model.user.RefreshToken;
+import com.refactoringflow.refactoringflowbackend.model.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.lang.NonNull;
 
@@ -18,12 +18,11 @@ public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Long
     Optional<RefreshToken> findById(@NonNull Long id);
 
     /**
-     * Find a refresh token by its students ID.
+     * Delete refresh tokens by its students ID.
      *
      * @param user The user
-     * @return The refresh token
      */
-    Optional<RefreshToken> findByUser(@NonNull User user);
+    void deleteRefreshTokensByUser(@NonNull User user);
 
     /**
      * Find a refresh token by its token.
