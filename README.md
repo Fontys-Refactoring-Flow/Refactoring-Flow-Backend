@@ -82,7 +82,7 @@ _Below is an instruction on how to install the project for it's first time run._
    properties can be found in the ``application.properties.example`` file.
 3. Run install script to generate a keystore file (for JWT validation)
    ```sh
-   ./install.sh
+   install.bat
    ```
 4. Package the project
    ```sh
